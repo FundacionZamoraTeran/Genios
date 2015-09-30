@@ -1,0 +1,14 @@
+[
+  {
+  "lectura": "Encerrado en la cárcel con mis hermanos, \nmetidito y tranquilo\n la vida paso,\n mas si cualquiera\n la cabeza me roza\n eso me quema.\n\nAdivinanza",
+  "pregunta": "¿Quién soy?",
+  "opciones": ["a- Una cerilla", "b- Un topo", "c- Un carbón"],
+  "respuesta": 0
+  },
+  {
+  "lectura": "Cuando te sientes de esta manera te da tristeza, extrañas a las personas que amas y quisieras estar cerca de ellas.", 
+  "pregunta": "¿Qué emoción es?",
+  "opciones": ["a- Tristeza", "b- Melancolía", "c- Soledad"],
+  "respuesta": 2 
+  }
+]
