@@ -1,2 +1,2 @@
 test:
-	nosetests --verbose
+	nosetests --verbose --with-coverage
