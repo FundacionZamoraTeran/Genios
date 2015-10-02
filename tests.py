@@ -1,6 +1,6 @@
-import unittest
-import engine
+from . import engine
 
+import unittest
 class MultipleChoiceQuizBaseTests(unittest.TestCase):
     '''Tests for MultipleChoiceQuizBase'''
     asset_file = 'sabio.json'

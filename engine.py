@@ -6,6 +6,7 @@ class MultipleChoiceQuizBase(object):
     used_questions = []
     #stores questions to ask
     questions = []
+    available_lives = 3
 
     def __init__(self, asset_file, dont_load=False):
         self.asset_file = asset_file
