@@ -1,8 +1,10 @@
+'''
+Pygame code here
+'''
 import sys
 import pygame
 from pygame.locals import QUIT
-
-OLPC_SCREEN_SIZE = (1200, 900)
+from utils import ImageSprite, BaseHelperClass, ScreenBaseClass, CURSOR
 
 get_sprite_path = lambda x, y: 'assets/img/sprites/%s/%s' % (x, y)
 
@@ -25,72 +27,10 @@ CHARACTER_SPRITES = {
 }
 
 
-class ImageSprite(pygame.sprite.Sprite):
-    '''Class to create a background image'''
-
-    def __init__(self, image_file, location=(0,0), name=None):
-        '''
-            image_file: filepath for the image
-            location: tuple of x y coordinates
-        '''
-        pygame.sprite.Sprite.__init__(self)  #call Sprite initializer
-        self.image = pygame.image.load(image_file)
-        self.name = name
-        self.rect = self.image.get_rect()
-        self.rect.left, self.rect.top = location
-
-
-class BaseHelperClass(object):
-    '''
-    Helper class to locate objects on the screen based on percentage
-    need to improve the name of this
-    '''
-    width, height = OLPC_SCREEN_SIZE
-
-    def translate_percent(self, w, h):
-        '''translates percentages to screen positions'''
-        x = (w / 100) * self.width
-        y = (h / 100) * self.height
-        return x, y
-
-    def translate_percent_centered(self, w, h, rect):
-        '''
-        translates percentages to screen positions
-        using the sprite center as point instead of top corner
-        '''
-        x, y = self.translate_percent(w, h)
-        x = x - (rect.width/2)
-        y = y - (rect.height/2)
-        return x, y
-
-class ScreenBaseClass (BaseHelperClass):
-
-    def __init__(self, screen):
-        self.screen = screen
-
-    def set_background(self):
-        background = ImageSprite(self.background)
-        self.screen.blit(background.image, background.rect)
-
-    def run(self):
-        raise NotImplementedError
-
-    def click_callback(self):
-        raise NotImplementedError
-
-    def detect_click(self):
-        while True:
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    pygame.quit()
-                if event.type == pygame.MOUSEBUTTONUP:
-                    pos = pygame.mouse.get_pos()
-                    clicked_sprites = [s for s in self.menu_items if s.rect.collidepoint(pos)]
-                    for s in clicked_sprites:
-                        self.click_callback(s)
-
-
 class CharacterSelectionScreen(ScreenBaseClass):
+    '''
+    class for character selection screen
+    '''
     background = 'assets/img/backgrounds/sabio.png'
     menu_items = pygame.sprite.Group()
 
@@ -122,6 +62,27 @@ class CharacterSelectionScreen(ScreenBaseClass):
 
         self.detect_click()
 
+class SabioScreen(ScreenBaseClass):
+    background = 'assets/img/backgrounds/sabio.png'
+    menu_items = pygame.sprite.Group()
+
+    def click_callback(self, sprite):
+        pass
+
+    def run(self):
+        self.set_background()
+
+    def display_reading(self, reading):
+        pass
+
+    def display_question(self, question):
+        pass
+
+    def update_lives(self, live_count):
+        pass
+
+    def update_score(self, score):
+        pass
 
 class StartScreen(ScreenBaseClass):
     background = 'assets/img/backgrounds/sabio.png'
@@ -139,7 +100,8 @@ class StartScreen(ScreenBaseClass):
 
             #to calculate evenly percentages, 20, 40, 60, 80
             position = 20 * (i + 1)
-            sprite.rect.left, sprite.rect.top = self.translate_percent_centered(position, 45, sprite.rect)
+            sprite.rect.left, sprite.rect.top = \
+                    self.translate_percent_centered(position, 45, sprite.rect)
             self.screen.blit(sprite.image, sprite.rect)
 
         pygame.display.update()
@@ -161,6 +123,8 @@ class MainClass(BaseHelperClass):
     def __init__(self):
         '''Start screen init'''
         pygame.init()
+        self.cursor = pygame.cursors.compile(CURSOR)
+        pygame.mouse.set_cursor((32,32), (1,1), *self.cursor)
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption('Genios')
         pygame.display.update()
@@ -183,5 +147,4 @@ class MainClass(BaseHelperClass):
 
 
 if __name__ == '__main__':
-    start = MainClass()
-    start.main()
+    MainClass().main()
