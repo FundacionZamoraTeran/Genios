@@ -4,7 +4,9 @@ Pygame code here
 import sys
 import pygame
 from pygame.locals import QUIT
-from utils import ImageSprite, BaseHelperClass, ScreenBaseClass, CURSOR
+
+from engine import SabioData
+from utils import ImageSprite, BaseHelperClass, ScreenBaseClass, CURSOR, COLORS
 
 get_sprite_path = lambda x, y: 'assets/img/sprites/%s/%s' % (x, y)
 
@@ -26,6 +28,10 @@ CHARACTER_SPRITES = {
     'label': get_sprite_path('character', 'label.png'),
 }
 
+SABIO_SPRITES = {
+    'book': get_sprite_path('sabio', 'book.png'),
+}
+
 
 class CharacterSelectionScreen(ScreenBaseClass):
     '''
@@ -35,6 +41,8 @@ class CharacterSelectionScreen(ScreenBaseClass):
     menu_items = pygame.sprite.Group()
 
     def click_callback(self, sprite):
+        sabio = SabioScreen(self.screen)
+        sabio.run()
         if sprite.name == 'boy':
             print("clickeo chatel")
         else:
@@ -65,15 +73,47 @@ class CharacterSelectionScreen(ScreenBaseClass):
 class SabioScreen(ScreenBaseClass):
     background = 'assets/img/backgrounds/sabio.png'
     menu_items = pygame.sprite.Group()
+    current_question = None
+
+    def __init__(self, screen):
+        super(SabioScreen, self).__init__(screen)
+        self.data = SabioData()
+        self.text_font = pygame.font.Font(None, 40)
+        self.small_font = pygame.font.Font(None, 24)
 
     def click_callback(self, sprite):
         pass
 
+
+    def update_score(self, score):
+        self.show_text(str(score), self.text_font,
+                       self.translate_percent(16, 10),
+                       COLORS['white'])
+
     def run(self):
         self.set_background()
+        book = ImageSprite(SABIO_SPRITES['book'])
+        self.screen.blit(book.image, self.translate_percent(2, 2))
+
+        #displaying score
+        self.update_score(self.data.score)
+
+        #diplaying Vidas
+        self.show_text(str('VIDAS'), self.text_font,
+                       self.translate_percent(95, 5),
+                       COLORS['white'])
+
+        self.current_question = self.data.get_random_question()
+        self.display_reading(self.current_question.get('lectura', ''))
+
+        pygame.display.update()
 
     def display_reading(self, reading):
-        pass
+        self.show_text_rect(reading,
+                            self.small_font, (500, 300),
+                            self.translate_percent(30, 20),
+                            COLORS['black'], COLORS['white'], 1)
+        #TODO agregar deteccion de click y boton para siguiente
 
     def display_question(self, question):
         pass
@@ -81,8 +121,6 @@ class SabioScreen(ScreenBaseClass):
     def update_lives(self, live_count):
         pass
 
-    def update_score(self, score):
-        pass
 
 class StartScreen(ScreenBaseClass):
     background = 'assets/img/backgrounds/sabio.png'
@@ -115,6 +153,7 @@ class StartScreen(ScreenBaseClass):
             #TODO: mostrar mensaje de que no se puede?
         else:
             #cargamos nuevo nivel
+            CharacterSelectionScreen(self.screen).run()
             print("Cargamos nuevo nivel")
 
 class MainClass(BaseHelperClass):
@@ -132,7 +171,7 @@ class MainClass(BaseHelperClass):
     def start_screen(self):
         start = StartScreen(self.screen)
         start.run()
-        #start = CharacterSelectionScreen(self.screen)
+        #start = SabioScreen(self.screen)
         #start.run()
 
     def main(self):
