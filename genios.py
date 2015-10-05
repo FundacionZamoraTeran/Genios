@@ -41,8 +41,8 @@ class CharacterSelectionScreen(ScreenBaseClass):
     menu_items = pygame.sprite.Group()
 
     def click_callback(self, sprite):
-        sabio = SabioScreen(self.screen)
-        sabio.run()
+        level = LevelSelectionScreen(self.screen)
+        level.run()
         if sprite.name == 'boy':
             print("clickeo chatel")
         else:
@@ -122,7 +122,7 @@ class SabioScreen(ScreenBaseClass):
         pass
 
 
-class StartScreen(ScreenBaseClass):
+class LevelSelectionScreen(ScreenBaseClass):
     background = 'assets/img/backgrounds/sabio.png'
     menu_items = pygame.sprite.Group()
 
@@ -153,7 +153,7 @@ class StartScreen(ScreenBaseClass):
             #TODO: mostrar mensaje de que no se puede?
         else:
             #cargamos nuevo nivel
-            CharacterSelectionScreen(self.screen).run()
+            SabioScreen(self.screen).run()
             print("Cargamos nuevo nivel")
 
 class MainClass(BaseHelperClass):
@@ -169,10 +169,8 @@ class MainClass(BaseHelperClass):
         pygame.display.update()
 
     def start_screen(self):
-        start = StartScreen(self.screen)
+        start = CharacterSelectionScreen(self.screen)
         start.run()
-        #start = SabioScreen(self.screen)
-        #start.run()
 
     def main(self):
         '''Runs main loop and stuff'''
