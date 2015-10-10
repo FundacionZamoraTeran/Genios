@@ -30,25 +30,39 @@ CHARACTER_SPRITES = {
 
 SABIO_SPRITES = {
     'book': get_sprite_path('sabio', 'book.png'),
+    'boy': get_sprite_path('sabio', 'boy.png'),
+    'boy_life': get_sprite_path('sabio', 'boy-life.png'),
+    'girl': get_sprite_path('sabio', 'girl.png'),
+    'girl_life': get_sprite_path('sabio', 'girl-life.png'),
+    'owl': get_sprite_path('sabio', 'owl.png'),
 }
 
 FONT_PATH = 'assets/fonts/PatuaOne-Regular.ttf'
+
+BOY = 'boy'
+GIRL = 'girl'
+
+selected_character = None
 
 
 class CharacterSelectionScreen(ScreenBaseClass):
     '''
     class for character selection screen
     '''
-    background = 'assets/img/backgrounds/sabio.png'
+    background_src = 'assets/img/backgrounds/sabio.png'
     menu_items = pygame.sprite.Group()
+    selected_character = None
 
     def click_callback(self, sprite):
+        global selected_character
+        if sprite.name == 'boy':
+            selected_character = BOY
+        else:
+            selected_character = GIRL
+
         level = LevelSelectionScreen(self.screen)
         level.run()
-        if sprite.name == 'boy':
-            print("clickeo chatel")
-        else:
-            print("clickeo chatela")
+
         return True
 
 
@@ -73,9 +87,13 @@ class CharacterSelectionScreen(ScreenBaseClass):
         self.detect_click()
 
 class SabioScreen(ScreenBaseClass):
-    background = 'assets/img/backgrounds/sabio.png'
+    background_src= 'assets/img/backgrounds/sabio.png'
+    lives_sprites = pygame.sprite.Group()
     menu_items = pygame.sprite.Group()
     current_question = None
+    seconds_per_word = 0.1 #60/20
+    initial_time = None
+    score_surface = None
 
     def __init__(self, screen):
         super(SabioScreen, self).__init__(screen)
@@ -86,46 +104,84 @@ class SabioScreen(ScreenBaseClass):
     def click_callback(self, sprite):
         pass
 
-
     def update_score(self, score):
-        self.show_text(str(score), self.text_font,
-                       self.translate_percent(16, 10),
-                       COLORS['white'])
+        pos = self.translate_percent(15, 8)
+        if self.score_surface:
+            rect = self.score_surface.get_rect()
+            rect.left, rect.top = pos
+            self.screen.blit(self.background, pos, rect)
+            self.score_surface.blit(self.background, self.score_surface.get_rect())
+
+        self.score_surface = self.show_text(str(score), self.text_font,
+                                            pos, COLORS['white'])
+
+    def render_lives(self, num=None):
+        num = num or self.data.max_lives
+        initial_location = self.translate_percent(85, 8)
+        sprite_name = "%s_life" % selected_character
+
+        self.lives_sprites.clear(self.screen, self.background)
+        self.lives_sprites.empty()
+
+        for x in range(num):
+            sprite = ImageSprite(SABIO_SPRITES[sprite_name], initial_location)
+            self.lives_sprites.add(sprite)
+            initial_location = (initial_location[0] + 55, initial_location[1])
+
+        self.lives_sprites.draw(self.screen)
 
     def run(self):
         self.set_background()
+
         book = ImageSprite(SABIO_SPRITES['book'])
         self.screen.blit(book.image, self.translate_percent(2, 2))
+
+        owl = ImageSprite(SABIO_SPRITES['owl'])
+        self.screen.blit(owl.image, self.translate_percent_centered(65, 33, book.rect))
+
+        character = ImageSprite(SABIO_SPRITES[selected_character])
+        self.screen.blit(character.image,
+                         self.translate_percent_centered(15, 83,
+                                                         character.rect))
 
         #displaying score
         self.update_score(self.data.score)
 
-        #diplaying Vidas
+        #diplaying Vidas text
         self.show_text(str('VIDAS'), self.text_font,
-                       self.translate_percent(95, 5),
+                       self.translate_percent(87, 2),
                        COLORS['white'])
+        self.render_lives()
 
         self.current_question = self.data.get_random_question()
         self.display_reading(self.current_question.get('lectura', ''))
 
-        pygame.display.update()
+        #pygame.display.update()
 
     def display_reading(self, reading):
-        self.show_text_rect(reading,
-                            self.small_font, (500, 300),
-                            self.translate_percent(30, 20),
-                            COLORS['black'], COLORS['white'], 1)
+        surface = self.show_text_rect(reading,
+                                      self.small_font, (500, 300),
+                                      self.translate_percent(13, 30),
+                                      COLORS['grey'], COLORS['white'], 1)
+        pygame.display.update()
         #TODO agregar deteccion de click y boton para siguiente
+        words = len(reading.split(' '))
+        time_to_wait = int(words * self.seconds_per_word * 1000)
+        pygame.time.wait(time_to_wait)
+        #display question
+
+        self.display_question(self.current_question.get('pregunta'))
 
     def display_question(self, question):
-        pass
-
-    def update_lives(self, live_count):
-        pass
+        surface = self.show_text_rect(question,
+                                      self.small_font, (500, 300),
+                                      self.translate_percent(13, 30),
+                                      COLORS['grey'], COLORS['white'], 1)
+        pygame.display.update()
 
 
 class LevelSelectionScreen(ScreenBaseClass):
-    background = 'assets/img/backgrounds/sabio.png'
+    background_src = 'assets/img/backgrounds/sabio.png'
     menu_items = pygame.sprite.Group()
 
     def run(self):

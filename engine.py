@@ -32,8 +32,8 @@ class SabioData(MultipleChoiceQuizBase):
 
     def __init__(self, dont_load=False):
         super(SabioData, self).__init__('sabio.json', dont_load)
-        self.max_lifes = 3
-        self.current_lifes = 3
+        self.max_lives = 3
+        self.current_lives = 3
         self.score = 0
 
 #utils funtions

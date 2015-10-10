@@ -7,13 +7,19 @@ OLPC_SCREEN_SIZE = (1200, 900)
 class ImageSprite(pygame.sprite.Sprite):
     '''Class to create a background image'''
 
-    def __init__(self, image_file, location=(0, 0), name=None):
+    def __init__(self, image_file, location=(0, 0), name=None, scale=None):
         '''
             image_file: filepath for the image
             location: tuple of x y coordinates
+            name: name for the sprite
+            scale: tuple of the new size of the image
         '''
         pygame.sprite.Sprite.__init__(self)  #call Sprite initializer
-        self.image = pygame.image.load(image_file)
+
+        self.image = pygame.image.load(image_file).convert_alpha()
+        if scale:
+            self.image = pygame.transform.scale(self.image, scale)
+
         self.name = name
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location
@@ -53,8 +59,11 @@ class ScreenBaseClass(BaseHelperClass):
 
     def set_background(self):
         '''Sets the background on the screen'''
-        background = ImageSprite(self.background)
+        background = ImageSprite(self.background_src, scale=OLPC_SCREEN_SIZE)
         self.screen.blit(background.image, background.rect)
+        surface = pygame.Surface(OLPC_SCREEN_SIZE)
+        surface.blit(background.image, background.rect)
+        self.background = surface
         return background
 
     def run(self):
@@ -73,25 +82,28 @@ class ScreenBaseClass(BaseHelperClass):
                     pygame.quit()
                 if event.type == pygame.MOUSEBUTTONUP:
                     pos = pygame.mouse.get_pos()
-                    clicked_sprites = [s for s in self.menu_items if s.rect.collidepoint(pos)]
+                    clicked_sprites = [s for s in self.menu_items \
+                                       if s.rect.collidepoint(pos)]
                     for s in clicked_sprites:
                         self.click_callback(s)
 
-    def show_text(self, text, font, pos=(0,0), color=(255, 255, 255)):
+    def show_text(self, text, font, pos=(0, 0), color=(255, 255, 255)):
         sprite = font.render(text, 1, color)
         rect = sprite.get_rect()
-        rect.center = pos
+        rect.left, rect.top = pos
         self.screen.blit(sprite, rect)
         return sprite
 
-    def show_text_rect(self, text, font, size, pos, color, background, justification=0):
+    def show_text_rect(self, text, font, size, pos, color,
+                       background, justification=0):
         rect = pygame.Rect(pos, size)
-        surface = self._render_textrect(text, font, rect, color, background, justification)
+        surface = self._render_textrect(text, font, rect, color,
+                                        background, justification)
         self.screen.blit(surface, rect)
         return surface
 
     def _render_textrect(self, string, font, rect,
-                        text_color, background_color, justification=0):
+                         text_color, background_color, justification=0):
         """Returns a surface containing the passed text string, reformatted
         to fit within the given rect, word-wrapping as necessary. The text
         will be anti-aliased.
@@ -167,40 +179,42 @@ class ScreenBaseClass(BaseHelperClass):
 
 
 CURSOR = (
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  ",
-            "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX ",
-            "XXX.........................XXXX",
-            "XXX..........................XXX",
-            "XXX..........................XXX",
-            "XXX.........................XXXX",
-            "XXX.......XXXXXXXXXXXXXXXXXXXXX ",
-            "XXX........XXXXXXXXXXXXXXXXXXX  ",
-            "XXX.........XXX                 ",
-            "XXX..........XXX                ",
-            "XXX...........XXX               ",
-            "XXX....X.......XXX              ",
-            "XXX....XX.......XXX             ",
-            "XXX....XXX.......XXX            ",
-            "XXX....XXXX.......XXX           ",
-            "XXX....XXXXX.......XXX          ",
-            "XXX....XXXXXX.......XXX         ",
-            "XXX....XXX XXX.......XXX        ",
-            "XXX....XXX  XXX.......XXX       ",
-            "XXX....XXX   XXX.......XXX      ",
-            "XXX....XXX    XXX.......XXX     ",
-            "XXX....XXX     XXX.......XXX    ",
-            "XXX....XXX      XXX.......XXX   ",
-            "XXX....XXX       XXX.......XXX  ",
-            "XXX....XXX        XXX.......XXX ",
-            "XXX....XXX         XXX.......XXX",
-            "XXX....XXX          XXX......XXX",
-            "XXX....XXX           XXX.....XXX",
-            "XXX....XXX            XXX...XXXX",
-            " XXX..XXX              XXXXXXXX ",
-            "  XXXXXX                XXXXXX  ",
-            "   XXXX                  XXXX   ")
+        "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  ",
+        "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX ",
+        "XXX.........................XXXX",
+        "XXX..........................XXX",
+        "XXX..........................XXX",
+        "XXX.........................XXXX",
+        "XXX.......XXXXXXXXXXXXXXXXXXXXX ",
+        "XXX........XXXXXXXXXXXXXXXXXXX  ",
+        "XXX.........XXX                 ",
+        "XXX..........XXX                ",
+        "XXX...........XXX               ",
+        "XXX....X.......XXX              ",
+        "XXX....XX.......XXX             ",
+        "XXX....XXX.......XXX            ",
+        "XXX....XXXX.......XXX           ",
+        "XXX....XXXXX.......XXX          ",
+        "XXX....XXXXXX.......XXX         ",
+        "XXX....XXX XXX.......XXX        ",
+        "XXX....XXX  XXX.......XXX       ",
+        "XXX....XXX   XXX.......XXX      ",
+        "XXX....XXX    XXX.......XXX     ",
+        "XXX....XXX     XXX.......XXX    ",
+        "XXX....XXX      XXX.......XXX   ",
+        "XXX....XXX       XXX.......XXX  ",
+        "XXX....XXX        XXX.......XXX ",
+        "XXX....XXX         XXX.......XXX",
+        "XXX....XXX          XXX......XXX",
+        "XXX....XXX           XXX.....XXX",
+        "XXX....XXX            XXX...XXXX",
+        " XXX..XXX              XXXXXXXX ",
+        "  XXXXXX                XXXXXX  ",
+        "   XXXX                  XXXX   "
+)
 
 COLORS = {
     'white': (255, 255, 255),
     'black': (0, 0, 0),
+    'grey': (130, 130, 130),
 }
