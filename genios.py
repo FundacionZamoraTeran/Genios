@@ -32,6 +32,8 @@ SABIO_SPRITES = {
     'book': get_sprite_path('sabio', 'book.png'),
 }
 
+FONT_PATH = 'assets/fonts/PatuaOne-Regular.ttf'
+
 
 class CharacterSelectionScreen(ScreenBaseClass):
     '''
@@ -78,8 +80,8 @@ class SabioScreen(ScreenBaseClass):
     def __init__(self, screen):
         super(SabioScreen, self).__init__(screen)
         self.data = SabioData()
-        self.text_font = pygame.font.Font(None, 40)
-        self.small_font = pygame.font.Font(None, 24)
+        self.text_font = pygame.font.Font(FONT_PATH, 40)
+        self.small_font = pygame.font.Font(FONT_PATH, 24)
 
     def click_callback(self, sprite):
         pass
