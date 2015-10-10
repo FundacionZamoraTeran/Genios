@@ -96,15 +96,39 @@ class ScreenBaseClass(BaseHelperClass):
         return sprite
 
     def show_text_rect(self, text, font, size, pos, color,
-                       background, justification=0):
+                       background, justification=0, alpha=None,
+                       parent_background=None, parent_alpha=None,
+                       margin=20):
+
         rect = pygame.Rect(pos, size)
         surface = self._render_textrect(text, font, rect, color,
-                                        background, justification)
+                                        justification=justification)
+
+        if parent_background:
+            parent_size = (size[0] + margin, size[1] + margin)
+            parent_pos = (pos[0] - (margin/2), pos[1] - (margin/2))
+            parent_rect = pygame.Rect(parent_pos, parent_size)
+            parent_surface = pygame.Surface(parent_size)
+            parent_surface.fill(parent_background)
+            parent_surface.set_alpha(parent_alpha)
+
+            surface2 = pygame.Surface(rect.size)
+            surface2.fill(background)
+            surface2.set_alpha(alpha)
+
+            self.screen.blit(self.background, parent_pos, parent_rect)
+            self.screen.blit(parent_surface, parent_rect)
+            self.screen.blit(surface2, rect)
+        else:
+            self.screen.blit(self.background, pos, rect)
+
+
         self.screen.blit(surface, rect)
         return surface
 
     def _render_textrect(self, string, font, rect,
-                         text_color, background_color, justification=0):
+                         text_color, background_color=None,
+                         justification=0, alpha=None):
         """Returns a surface containing the passed text string, reformatted
         to fit within the given rect, word-wrapping as necessary. The text
         will be anti-aliased.
@@ -157,8 +181,13 @@ class ScreenBaseClass(BaseHelperClass):
 
         # Let's try to write the text out on the surface.
 
-        surface = pygame.Surface(rect.size)
-        surface.fill(background_color)
+        if background_color:
+            surface = pygame.Surface(rect.size)
+            surface.fill(background_color)
+        if alpha:
+            surface.set_alpha(alpha)
+        else:
+            surface = pygame.Surface(rect.size, pygame.SRCALPHA, 32)
 
         accumulated_height = 0
         for line in final_lines:
@@ -218,5 +247,5 @@ COLORS = {
     'white': (255, 255, 255),
     'black': (0, 0, 0),
     'grey': (130, 130, 130),
-    'orange': (250, 184, 51, 100),
+    'yellow': (252, 185, 24),
 }

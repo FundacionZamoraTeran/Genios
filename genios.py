@@ -137,7 +137,6 @@ class SabioScreen(ScreenBaseClass):
             rect = self.score_surface.get_rect()
             rect.left, rect.top = pos
             self.screen.blit(self.background, pos, rect)
-            self.score_surface.blit(self.background, self.score_surface.get_rect())
 
         self.score_surface = self.show_text(str(score), self.text_font,
                                             pos, COLORS['white'])
@@ -191,7 +190,10 @@ class SabioScreen(ScreenBaseClass):
         surface = self.show_text_rect(reading,
                                       self.small_font, (500, 300),
                                       self.translate_percent(13, 30),
-                                      COLORS['grey'], COLORS['white'], 1)
+                                      COLORS['grey'], COLORS['white'],
+                                      justification=1, alpha=191,
+                                      parent_background=COLORS['yellow'],
+                                      parent_alpha=191)
         pygame.display.update()
         #TODO agregar deteccion de click y boton para siguiente
         words = len(reading.split(' '))
@@ -205,7 +207,10 @@ class SabioScreen(ScreenBaseClass):
         surface = self.show_text_rect(question,
                                       self.small_font, (500, 300),
                                       self.translate_percent(13, 30),
-                                      COLORS['grey'], COLORS['white'], 1)
+                                      COLORS['grey'], COLORS['white'],
+                                      justification=1, alpha=191,
+                                      parent_background=COLORS['yellow'],
+                                      parent_alpha=191)
         #agregar sprites de opcion de menu
         pos = self.translate_percent(20, 40)
         for i, opcion in enumerate(self.current_question.get('opciones')):
