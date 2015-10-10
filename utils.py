@@ -86,6 +86,7 @@ class ScreenBaseClass(BaseHelperClass):
                                        if s.rect.collidepoint(pos)]
                     for s in clicked_sprites:
                         self.click_callback(s)
+                        break
 
     def show_text(self, text, font, pos=(0, 0), color=(255, 255, 255)):
         sprite = font.render(text, 1, color)
@@ -217,4 +218,5 @@ COLORS = {
     'white': (255, 255, 255),
     'black': (0, 0, 0),
     'grey': (130, 130, 130),
+    'orange': (250, 184, 51, 100),
 }

@@ -36,6 +36,15 @@ class SabioData(MultipleChoiceQuizBase):
         self.current_lives = 3
         self.score = 0
 
+    def win(self):
+        self.score += 1
+
+    def loss(self):
+        self.max_lives -= 1
+
+    def game_over(self):
+        return self.current_lives < 1
+
 #utils funtions
 def load_json(file_name):
     contents = open("data/%s" % file_name, 'r').read()

@@ -35,6 +35,9 @@ SABIO_SPRITES = {
     'girl': get_sprite_path('sabio', 'girl.png'),
     'girl_life': get_sprite_path('sabio', 'girl-life.png'),
     'owl': get_sprite_path('sabio', 'owl.png'),
+    'checkbox': get_sprite_path('sabio', 'checkbox.png'),
+    'checkbox_checked': get_sprite_path('sabio', 'checkbox-checked.png'),
+    'checkbox_bad': get_sprite_path('sabio', 'checkbox-bad.png'),
 }
 
 FONT_PATH = 'assets/fonts/PatuaOne-Regular.ttf'
@@ -61,6 +64,7 @@ class CharacterSelectionScreen(ScreenBaseClass):
             selected_character = GIRL
 
         level = LevelSelectionScreen(self.screen)
+        self.menu_items.empty()
         level.run()
 
         return True
@@ -102,10 +106,33 @@ class SabioScreen(ScreenBaseClass):
         self.small_font = pygame.font.Font(FONT_PATH, 24)
 
     def click_callback(self, sprite):
-        pass
+        rect = sprite.rect
+        pos = (rect.left, rect.top)
+        self.menu_items.empty()
+        if sprite.name == str(self.current_question.get('respuesta')):
+            #respuesta correcta, registramos puntaje
+            self.data.win()
+            #se muestra un check
+            checkbox = ImageSprite(SABIO_SPRITES['checkbox_checked'], pos)
+            self.update_score()
+        else:
+            self.data.loss()
+            self.render_lives()
+            if self.data.game_over():
+                print("GAME OVER")
+            else:
+                checkbox = ImageSprite(SABIO_SPRITES['checkbox_bad'], pos)
 
-    def update_score(self, score):
+        self.screen.blit(checkbox.image, checkbox.rect)
+        pygame.display.update(rect)
+        #esperar un round
+        pygame.time.wait(1000)
+        #mostrar otra pregunta
+        self.next_question()
+
+    def update_score(self, score=None):
         pos = self.translate_percent(15, 8)
+        score = score or self.data.score
         if self.score_surface:
             rect = self.score_surface.get_rect()
             rect.left, rect.top = pos
@@ -145,7 +172,7 @@ class SabioScreen(ScreenBaseClass):
                                                          character.rect))
 
         #displaying score
-        self.update_score(self.data.score)
+        self.update_score()
 
         #diplaying Vidas text
         self.show_text(str('VIDAS'), self.text_font,
@@ -153,10 +180,12 @@ class SabioScreen(ScreenBaseClass):
                        COLORS['white'])
         self.render_lives()
 
+        self.next_question()
+        #pygame.display.update()
+
+    def next_question(self):
         self.current_question = self.data.get_random_question()
         self.display_reading(self.current_question.get('lectura', ''))
-
-        #pygame.display.update()
 
     def display_reading(self, reading):
         surface = self.show_text_rect(reading,
@@ -177,7 +206,18 @@ class SabioScreen(ScreenBaseClass):
                                       self.small_font, (500, 300),
                                       self.translate_percent(13, 30),
                                       COLORS['grey'], COLORS['white'], 1)
+        #agregar sprites de opcion de menu
+        pos = self.translate_percent(20, 40)
+        for i, opcion in enumerate(self.current_question.get('opciones')):
+            checkbox = ImageSprite(SABIO_SPRITES['checkbox'], pos, name=str(i))
+            self.menu_items.add(checkbox)
+            self.screen.blit(checkbox.image, checkbox.rect)
+            text_pos = (pos[0]+40, pos[1]-3)
+            self.show_text(opcion, self.small_font, text_pos, COLORS['grey'])
+            pos = (pos[0], pos[1] + 60)
         pygame.display.update()
+
+        self.detect_click()
 
 
 class LevelSelectionScreen(ScreenBaseClass):
@@ -211,6 +251,7 @@ class LevelSelectionScreen(ScreenBaseClass):
             #TODO: mostrar mensaje de que no se puede?
         else:
             #cargamos nuevo nivel
+            self.menu_items.empty()
             SabioScreen(self.screen).run()
             print("Cargamos nuevo nivel")
 
@@ -227,6 +268,7 @@ class MainClass(BaseHelperClass):
         pygame.display.update()
 
     def start_screen(self):
+        '''Runs the main game'''
         start = CharacterSelectionScreen(self.screen)
         start.run()
 
@@ -239,7 +281,6 @@ class MainClass(BaseHelperClass):
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-
 
 if __name__ == '__main__':
     MainClass().main()
