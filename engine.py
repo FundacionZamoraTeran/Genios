@@ -33,14 +33,14 @@ class SabioData(MultipleChoiceQuizBase):
     def __init__(self, dont_load=False):
         super(SabioData, self).__init__('sabio.json', dont_load)
         self.max_lives = 3
-        self.current_lives = 3
+        self.current_lives = self.max_lives
         self.score = 0
 
     def win(self):
         self.score += 1
 
     def loss(self):
-        self.max_lives -= 1
+        self.current_lives -= 1
 
     def game_over(self):
         return self.current_lives < 1

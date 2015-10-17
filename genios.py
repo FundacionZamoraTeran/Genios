@@ -45,6 +45,9 @@ FONT_PATH = 'assets/fonts/PatuaOne-Regular.ttf'
 BOY = 'boy'
 GIRL = 'girl'
 
+GAME_OVER_TIME = 3000 #3 segundos
+MAX_QUESTION_CHARS = 30
+
 selected_character = None
 
 
@@ -119,7 +122,17 @@ class SabioScreen(ScreenBaseClass):
             self.data.loss()
             self.render_lives()
             if self.data.game_over():
-                print("GAME OVER")
+                message = "Vuelve a intentarlo"
+                surface = self.show_text_rect(message,
+                                      self.small_font, (500, 300),
+                                      self.translate_percent(13, 30),
+                                      COLORS['grey'], COLORS['white'],
+                                      justification=1, alpha=191,
+                                      parent_background=COLORS['yellow'],
+                                      parent_alpha=191)
+                pygame.display.update()
+                pygame.time.wait(GAME_OVER_TIME)
+                return LevelSelectionScreen(self.screen).run()
             else:
                 checkbox = ImageSprite(SABIO_SPRITES['checkbox_bad'], pos)
 
@@ -142,7 +155,7 @@ class SabioScreen(ScreenBaseClass):
                                             pos, COLORS['white'])
 
     def render_lives(self, num=None):
-        num = num or self.data.max_lives
+        num = num or self.data.current_lives
         initial_location = self.translate_percent(85, 8)
         sprite_name = "%s_life" % selected_character
 
@@ -213,13 +226,34 @@ class SabioScreen(ScreenBaseClass):
                                       parent_alpha=191)
         #agregar sprites de opcion de menu
         pos = self.translate_percent(20, 40)
-        for i, opcion in enumerate(self.current_question.get('opciones')):
+        for i, option in enumerate(self.current_question.get('opciones')):
             checkbox = ImageSprite(SABIO_SPRITES['checkbox'], pos, name=str(i))
             self.menu_items.add(checkbox)
             self.screen.blit(checkbox.image, checkbox.rect)
             text_pos = (pos[0]+40, pos[1]-3)
-            self.show_text(opcion, self.small_font, text_pos, COLORS['grey'])
-            pos = (pos[0], pos[1] + 60)
+
+            #separamos texto largote
+            if len(option) > MAX_QUESTION_CHARS:
+                lines = []
+                new_option = ''
+                tmp_len = len(new_option)
+                for word in option.split(' '):
+                    tmp_len = len(new_option)
+                    if (tmp_len + len(word) + 1) < MAX_QUESTION_CHARS:
+                        new_option += ' ' + word
+                    else:
+                        lines.append(new_option)
+                        new_option = word
+                lines.append(new_option)
+
+                for line in lines:
+                    self.show_text(line, self.small_font, text_pos, COLORS['grey'])
+                    pos = (pos[0], pos[1] + 30)
+                    text_pos = (pos[0]+40, pos[1]-3)
+            else:
+                self.show_text(option, self.small_font, text_pos, COLORS['grey'])
+                pos = (pos[0], pos[1] + 60)
+
         pygame.display.update()
 
         self.detect_click()
