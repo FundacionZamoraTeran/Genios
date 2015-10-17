@@ -1,0 +1,62 @@
+[
+  {
+  "lectura": "La ola es el mar que dice: ¡Hola!.\n\n La Ola. Triunfo Arciniegas - Colombia",
+  "pregunta": "¿Quién dice hola?",
+  "opciones": ["El mar", "La ola", "El sol"],
+  "respuesta": 1
+  },
+  {
+  "lectura": "Cuando llega el viento a la ciudad como va siempre como ciego se pega con todo:\n los árboles, las señales de tráfico, los semáforos, las esquinas...\n Al final se le queda una pinta que da pena, horrible.\n Por eso se hizo invisible.\n\n El viento. Karmelo C. Iribarren. España.",
+  "pregunta": "¿Por qué el viento se hizo invisible?",
+  "opciones": ["Porque cuando llega a la ciudad se pega con todo", "Porque el viento es ciego", "Porque su pinta da pena"],
+  "respuesta": 0
+  },
+  {
+  "lectura": "Sobre la arena dejan los cangrejos la ilegible escritura de sus huellas. Conchas de color rosa y de reflejos, áureos caracolillos y fragmentos de estrellas de mar forman alfombra sonante al paso en la armoniosa orilla.\n\n Vesperal (Fragmento). Rubén Darío - Nicaragua.",
+  "pregunta": "Según el texto, ¿qué significa la palabra ilegible?",
+  "opciones": ["Escritura de cangrejo", "Que está escrito en la arena", "Que no se puede leer"],
+  "respuesta": 2
+  },
+  {
+  "lectura": "El sol y la luna por fin se juntaron. Bailaron, bailaron y se separaron. ¡Qué fría es la luna! tiritó el sol. ¡Por poco me quemo! la luna gimió.\n\n El sol y la luna. Nelly García de Pión - República Dominicana.",
+  "pregunta": "¿Por qué se separaron el sol y la luna?",
+  "opciones": ["Porque se cansaron de bailar", "Porque se pelearon", "Porque no soportaron el frío y el calor"],
+  "respuesta": 2
+  },
+  {
+  "lectura": "Amar,amar, amar, amar siempre, con todo el ser y con la tierra y con el cielo, con lo claro del sol y lo obscuro del lodo: amar por toda ciencia y amar por todo anhelo.\n Y cuando la montaña de la vida nos sea dura y larga y alta y llena de abismos, amar la inmensidad que es de amor encendida ¡y arder en la fusión de nuestros pechos mismos!\n\n Amo, amas... Rubén Darío - Nicaragua.",
+  "pregunta": "¿Qué sugiere el poeta de amar?",
+  "opciones": ["Amar a todos y todas", "Amar con todo nuestro ser y en todo momento", "Amar la inmensidad"],
+  "respuesta": 1
+  },
+  {
+  "lectura": "El paraguas es una flor de tela impermeable que florece en medio del invierno. \n Comienza la lluvia: Clap, clap, clap.\n Y los paraguas abren sus pétalos: Flop, flop, flop.\n\n Y las personas que lo saben olvidan por un momento que es invierno, incluso olvidan que son personas y se sienten abejas, orugas, mariposas bajo un árbol. \n\n Llueve. Llueve. Las personas salen a la calle, abren los paraguas. Van de la escuela, al parque, del parque a la panadería. Clap, clap. Flop, flop. Y es un jardín que parece caminar. \n\n El paraguas. María José Ferrada. Chile.",
+  "pregunta": "¿A qué se refiere la frase: \"es un jardín que parece caminar\"",
+  "opciones": ["A que las personas se sienten abejas, orugas, mariposas bajo un paraguas", "A que el paraguas parece una flor impermeable que florece en el viento", "Que un paraguas se abre en medio de un jardín en el invierno"],
+  "respuesta": 1
+  },
+  {
+  "lectura": "Dichoso el árbol que es apenas sensitivo, y más la roca dura porque esa ya no siente, pues no hay dolor más grande que el dolor de ser vivo, ni mayor pesadumbre que la vida consciente. Ser, y no saber nada, y ser sin rumbo cierto, y el temor de haber sido y un futuro terror... ¡Y el espanto seguro de estar mañana muerto, y sufrir por la vida y por la sombra y por lo que no conocemos y apenas sospechamos, y la carne que tienta con sus frescos racimos, y la tumba que aguarda con sus fúnebres ramos y no saber adonde vamos ni de dónde venimos!...\n\n Lo fatal. Rubén Darío. Nicaragua.",
+  "pregunta": "Según el texto, ¿Qué significa la palabra sensitivo?",
+  "opciones": ["Que duele", "Que está vivo", "Que siente"],
+  "respuesta": 2
+  },
+  {
+  "lectura": "Los libros no son para mirarlos, son para tocarlos, abrirlos, y leerlos, que es como entrar en ellos.\n Prueba y verás.\n Te acuerdan a cuando viajas a una ciudad diferente, y todo te parece nuevo, sorprendente, y hasta un poco misterioso. \n\n Los libros. Karmelo C. Iribarren. España.",
+  "pregunta": "¿Por qué los libros te recuerdan a cuando viajas?",
+  "opciones": ["Porque descubres cosas nuevas, sorprendentes y misteriosas", "Porque puedes viajar con tu imaginación", "Porque puedes tocarlos, mirarlos y leerlos"],
+  "respuesta": 0
+  },
+  {
+  "lectura": "Los lápices pertenecen a distintas familias. Están los lápices de los contadores, que son lápices exactos. 4x7=28; 41+54=95.\n\n Los lápices de los niños que están un poco mordidos y son expertos dibujantes de zoológico.\n\n También están los lápices que escriben cartas y que dentro de la tinta traen frases (flotan como si fueran pequeños barcos) como: \"por aquí hace un día soleado\", \"besos y abrazos para todos\".\n\n También están los lápices de poetas que escriben, suspiran, borran y vuelven a escribir. Escriben, suspiran, borran y vuelven a escribir.\n\n Los lápices. María José Ferrada. Chile.",
+  "pregunta": "Los lápices mordidos y expertos dibujantes de zoológicos son los de:",
+  "opciones": ["Los contadores", "Los niños", "Los poetas"],
+  "respuesta": 1
+  },
+  {
+  "lectura": "Las estaciones sirven para tres cosas muy importantes: para que lleguen los trenes, para que se vuelvan a ir, y para que lloren los enamorados.\n\n Las estaciones. karmelo C. Iribarren. España.",
+  "pregunta": "¿Por qué los enamorados lloran en las estaciones?",
+  "opciones": ["Porque se dicen adiós.", "Porque llegan los trenes.", "Porque los trenes se van."],
+  "respuesta": 0
+  }
+]

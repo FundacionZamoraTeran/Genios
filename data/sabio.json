@@ -10,49 +10,49 @@
   "pregunta": "¿Qué emoción es?",
   "opciones": ["Tristeza", "Melancolía", "Soledad"],
   "respuesta": 2 
-  }
+  },
   {
   "lectura": "Quietas, inquietas, de día durmiendo, de noche despiertas. \n\n Adivinanza",
   "pregunta": "¿Quiénes somos?",
   "opciones": ["Las estrellas", "Las pulgas", "Las lechuzas"],
   "respuesta": 0
-  }
+  },
   {
   "lectura": "Por un camino de hierro voy contento, muy veloz y doy un fuerte silbido cuando llego a la estación.",
   "pregunta": "¿Quién soy",
   "opciones": ["El autobus", "El caballo", "El tren"],
   "respuesta": 2
-  }
+  },
   {
   "lectura": "Ojos que no ven, corazón que no siente.",
   "pregunta": "¿Qué significa este refrán?",
   "opciones": ["Solo se siente con el corazón", "No se sufre por lo que no se sabe", "Solo amamos lo que vemos"],
   "respuesta": 1
-  }
+  },
   {
   "lectura": "Te puedes sentir así cuando debes cumplir con una tarea que alguien te ha asignado y sabes que no debes fallar.",
   "pregunta": "¿Qué emoción es?",
   "opciones": ["Responsabilidad", "Angustia", "Compromiso"],
   "respuesta": 0
-  }
+  },
   {
   "lectura": "A buen entendedor, pocas palabras bastan. \n\n Refrán popular",
   "pregunta": "¿Qué significa este refrán?",
   "opciones": ["Hay que hablar claro y poco", "Hay que hablar poco para los que saben escuchar", "Hay que hablar poco y fuerte"],
   "respuesta": 1
-  }
+  },
   {
   "lectura": "Cuando estás así puedes sentir que no sabes qué hacer. Te sudan las manos o la cara, el corazón palpita muy rápido, las piernas te tiemblan y no sabes qué decir o qué hacer.",
   "pregunta": "¿Qué emoción es?",
   "opciones": ["Alegría", "Nerviosismo", "Rabia"],
   "respuesta": 1
-  }
+  },
   {
   "lectura": "De la tierra voy al cielo y del cielo he de volver; soy el alma de los campos que los hace florecer.\n\n Adivinanza",
   "pregunta": "¿Quién soy?",
   "opciones": ["La lluvia", "Las aves", "Las semillas"],
   "respuesta": 0
-  }
+  },
   {
   "lectura": "En boca cerrada no entran moscas. \n\n Refrán popular",
   "pregunta": "¿Qué significa este refrán?",
