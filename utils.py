@@ -15,7 +15,6 @@ class ImageSprite(pygame.sprite.Sprite):
             scale: tuple of the new size of the image
         '''
         pygame.sprite.Sprite.__init__(self)  #call Sprite initializer
-
         self.image = pygame.image.load(image_file).convert_alpha()
         if scale:
             self.image = pygame.transform.scale(self.image, scale)
@@ -53,6 +52,8 @@ class ScreenBaseClass(BaseHelperClass):
     Base class to draw screens it contains
     helper methods for screen and click detection
     '''
+    score_surface = None
+    selected_character = None
 
     def __init__(self, screen):
         self.screen = screen
@@ -73,6 +74,32 @@ class ScreenBaseClass(BaseHelperClass):
     def click_callback(self):
         '''This method is executed when detecting a click on items'''
         raise NotImplementedError
+
+    def update_score(self, score=None):
+        pos = self.translate_percent(15, 8)
+        score = score or self.data.score
+        if self.score_surface:
+            rect = self.score_surface.get_rect()
+            rect.left, rect.top = pos
+            self.screen.blit(self.background, pos, rect)
+
+        self.score_surface = self.show_text(str(score), self.text_font,
+                                            pos, COLORS['white'])
+
+    def render_lives(self, sprite_path, num=None):
+        num = num or self.data.current_lives
+        initial_location = self.translate_percent(85, 8)
+
+        self.lives_sprites.clear(self.screen, self.background)
+        self.lives_sprites.empty()
+
+        for x in range(num):
+            sprite = ImageSprite(sprite_path, initial_location)
+            self.lives_sprites.add(sprite)
+            initial_location = (initial_location[0] + 55, initial_location[1])
+
+        self.lives_sprites.draw(self.screen)
+
 
     def detect_click(self):
         '''Event loop to detect clicks'''

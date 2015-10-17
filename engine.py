@@ -6,7 +6,6 @@ class MultipleChoiceQuizBase(object):
     used_questions = []
     #stores questions to ask
     questions = []
-    available_lives = 3
 
     def __init__(self, asset_file, dont_load=False):
         self.asset_file = asset_file
@@ -28,6 +27,7 @@ class MultipleChoiceQuizBase(object):
         self.used_questions.append(question)
         return question
 
+
 class SabioData(MultipleChoiceQuizBase):
 
     def __init__(self, dont_load=False):
@@ -44,6 +44,9 @@ class SabioData(MultipleChoiceQuizBase):
 
     def game_over(self):
         return self.current_lives < 1
+
+    def has_won(self):
+        return len(self.questions) == 0
 
 #utils funtions
 def load_json(file_name):

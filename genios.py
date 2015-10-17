@@ -8,45 +8,8 @@ from pygame.locals import QUIT
 from engine import SabioData
 from utils import ImageSprite, BaseHelperClass, ScreenBaseClass, CURSOR, COLORS
 
-get_sprite_path = lambda x, y: 'assets/img/sprites/%s/%s' % (x, y)
+import consts
 
-START_SPRITES = {
-    'book': get_sprite_path('start', 'book.png'),
-    'book_locked': get_sprite_path('start', 'book-locked.png'),
-    'cloud': get_sprite_path('start', 'cloud.png'),
-    'cloud_locked': get_sprite_path('start', 'cloud-locked.png'),
-    'lamp': get_sprite_path('start', 'lamp.png'),
-    'lamp_locked': get_sprite_path('start', 'lamp-locked.png'),
-    'feather': get_sprite_path('start', 'feather.png'),
-    'feather_locked': get_sprite_path('start', 'feather-locked.png'),
-    'mundos': get_sprite_path('start', 'mundos.png'),
-}
-
-CHARACTER_SPRITES = {
-    'boy': get_sprite_path('character', 'boy.png'),
-    'girl': get_sprite_path('character', 'girl.png'),
-    'label': get_sprite_path('character', 'label.png'),
-}
-
-SABIO_SPRITES = {
-    'book': get_sprite_path('sabio', 'book.png'),
-    'boy': get_sprite_path('sabio', 'boy.png'),
-    'boy_life': get_sprite_path('sabio', 'boy-life.png'),
-    'girl': get_sprite_path('sabio', 'girl.png'),
-    'girl_life': get_sprite_path('sabio', 'girl-life.png'),
-    'owl': get_sprite_path('sabio', 'owl.png'),
-    'checkbox': get_sprite_path('sabio', 'checkbox.png'),
-    'checkbox_checked': get_sprite_path('sabio', 'checkbox-checked.png'),
-    'checkbox_bad': get_sprite_path('sabio', 'checkbox-bad.png'),
-}
-
-FONT_PATH = 'assets/fonts/PatuaOne-Regular.ttf'
-
-BOY = 'boy'
-GIRL = 'girl'
-
-GAME_OVER_TIME = 3000 #3 segundos
-MAX_QUESTION_CHARS = 30
 
 selected_character = None
 
@@ -62,9 +25,9 @@ class CharacterSelectionScreen(ScreenBaseClass):
     def click_callback(self, sprite):
         global selected_character
         if sprite.name == 'boy':
-            selected_character = BOY
+            selected_character = consts.BOY
         else:
-            selected_character = GIRL
+            selected_character = consts.GIRL
 
         level = LevelSelectionScreen(self.screen)
         self.menu_items.empty()
@@ -76,15 +39,15 @@ class CharacterSelectionScreen(ScreenBaseClass):
     def run(self):
         '''runs the screen'''
         self.set_background()
-        label = ImageSprite(CHARACTER_SPRITES['label'])
+        label = ImageSprite(consts.CHARACTER_SPRITES['label'])
         self.screen.blit(label.image, self.translate_percent_centered(50, 20, label.rect))
 
-        boy = ImageSprite(CHARACTER_SPRITES['boy'], name='boy')
+        boy = ImageSprite(consts.CHARACTER_SPRITES['boy'], name='boy')
         self.menu_items.add(boy)
         boy.rect.left, boy.rect.top = self.translate_percent_centered(30, 55, boy.rect)
         self.screen.blit(boy.image, boy.rect)
 
-        girl = ImageSprite(CHARACTER_SPRITES['girl'], name='girl')
+        girl = ImageSprite(consts.CHARACTER_SPRITES['girl'], name='girl')
         self.menu_items.add(girl)
         girl.rect.left, girl.rect.top = self.translate_percent_centered(70, 55, girl.rect)
         self.screen.blit(girl.image, girl.rect)
@@ -105,8 +68,21 @@ class SabioScreen(ScreenBaseClass):
     def __init__(self, screen):
         super(SabioScreen, self).__init__(screen)
         self.data = SabioData()
-        self.text_font = pygame.font.Font(FONT_PATH, 40)
-        self.small_font = pygame.font.Font(FONT_PATH, 24)
+        self.text_font = pygame.font.Font(consts.FONT_PATH, 40)
+        self.small_font = pygame.font.Font(consts.FONT_PATH, 24)
+        self.selected_character = selected_character
+
+    def level_finished_message(self, message):
+        surface = self.show_text_rect(message,
+                                      self.small_font, (500, 300),
+                                      self.translate_percent(13, 30),
+                                      COLORS['grey'], COLORS['white'],
+                                      justification=1, alpha=191,
+                                      parent_background=COLORS['yellow'],
+                                      parent_alpha=191)
+        pygame.display.update()
+        pygame.time.wait(consts.GAME_OVER_TIME)
+        return LevelSelectionScreen(self.screen).run()
 
     def click_callback(self, sprite):
         rect = sprite.rect
@@ -116,25 +92,17 @@ class SabioScreen(ScreenBaseClass):
             #respuesta correcta, registramos puntaje
             self.data.win()
             #se muestra un check
-            checkbox = ImageSprite(SABIO_SPRITES['checkbox_checked'], pos)
+            checkbox = ImageSprite(consts.SABIO_SPRITES['checkbox_checked'], pos)
             self.update_score()
+            if self.data.has_won():
+                self.level_finished_message(consts.WIN_MESSAGE)
         else:
             self.data.loss()
             self.render_lives()
             if self.data.game_over():
-                message = "Vuelve a intentarlo"
-                surface = self.show_text_rect(message,
-                                      self.small_font, (500, 300),
-                                      self.translate_percent(13, 30),
-                                      COLORS['grey'], COLORS['white'],
-                                      justification=1, alpha=191,
-                                      parent_background=COLORS['yellow'],
-                                      parent_alpha=191)
-                pygame.display.update()
-                pygame.time.wait(GAME_OVER_TIME)
-                return LevelSelectionScreen(self.screen).run()
+                self.level_finished_message(consts.GAME_OVER_MESSAGE)
             else:
-                checkbox = ImageSprite(SABIO_SPRITES['checkbox_bad'], pos)
+                checkbox = ImageSprite(consts.SABIO_SPRITES['checkbox_bad'], pos)
 
         self.screen.blit(checkbox.image, checkbox.rect)
         pygame.display.update(rect)
@@ -143,42 +111,20 @@ class SabioScreen(ScreenBaseClass):
         #mostrar otra pregunta
         self.next_question()
 
-    def update_score(self, score=None):
-        pos = self.translate_percent(15, 8)
-        score = score or self.data.score
-        if self.score_surface:
-            rect = self.score_surface.get_rect()
-            rect.left, rect.top = pos
-            self.screen.blit(self.background, pos, rect)
-
-        self.score_surface = self.show_text(str(score), self.text_font,
-                                            pos, COLORS['white'])
-
     def render_lives(self, num=None):
-        num = num or self.data.current_lives
-        initial_location = self.translate_percent(85, 8)
-        sprite_name = "%s_life" % selected_character
-
-        self.lives_sprites.clear(self.screen, self.background)
-        self.lives_sprites.empty()
-
-        for x in range(num):
-            sprite = ImageSprite(SABIO_SPRITES[sprite_name], initial_location)
-            self.lives_sprites.add(sprite)
-            initial_location = (initial_location[0] + 55, initial_location[1])
-
-        self.lives_sprites.draw(self.screen)
+        sprite_name = "%s_life" % self.selected_character
+        super(SabioScreen, self).render_lives(consts.SABIO_SPRITES[sprite_name], num)
 
     def run(self):
         self.set_background()
 
-        book = ImageSprite(SABIO_SPRITES['book'])
+        book = ImageSprite(consts.SABIO_SPRITES['book'])
         self.screen.blit(book.image, self.translate_percent(2, 2))
 
-        owl = ImageSprite(SABIO_SPRITES['owl'])
+        owl = ImageSprite(consts.SABIO_SPRITES['owl'])
         self.screen.blit(owl.image, self.translate_percent_centered(65, 33, book.rect))
 
-        character = ImageSprite(SABIO_SPRITES[selected_character])
+        character = ImageSprite(consts.SABIO_SPRITES[self.selected_character])
         self.screen.blit(character.image,
                          self.translate_percent_centered(15, 83,
                                                          character.rect))
@@ -227,19 +173,19 @@ class SabioScreen(ScreenBaseClass):
         #agregar sprites de opcion de menu
         pos = self.translate_percent(20, 40)
         for i, option in enumerate(self.current_question.get('opciones')):
-            checkbox = ImageSprite(SABIO_SPRITES['checkbox'], pos, name=str(i))
+            checkbox = ImageSprite(consts.SABIO_SPRITES['checkbox'], pos, name=str(i))
             self.menu_items.add(checkbox)
             self.screen.blit(checkbox.image, checkbox.rect)
             text_pos = (pos[0]+40, pos[1]-3)
 
             #separamos texto largote
-            if len(option) > MAX_QUESTION_CHARS:
+            if len(option) > consts.MAX_QUESTION_CHARS:
                 lines = []
                 new_option = ''
                 tmp_len = len(new_option)
                 for word in option.split(' '):
                     tmp_len = len(new_option)
-                    if (tmp_len + len(word) + 1) < MAX_QUESTION_CHARS:
+                    if (tmp_len + len(word) + 1) < consts.MAX_QUESTION_CHARS:
                         new_option += ' ' + word
                     else:
                         lines.append(new_option)
@@ -266,11 +212,11 @@ class LevelSelectionScreen(ScreenBaseClass):
     def run(self):
         '''runs the screen'''
         self.set_background()
-        mundos = ImageSprite(START_SPRITES['mundos'])
+        mundos = ImageSprite(consts.START_SPRITES['mundos'])
         self.screen.blit(mundos.image, self.translate_percent_centered(50, 20, mundos.rect))
         #TODO: get this list from saved game data
         for i, s in enumerate(['lamp', 'book_locked', 'feather_locked', 'cloud_locked']):
-            sprite = ImageSprite(START_SPRITES.get(s), name=s)
+            sprite = ImageSprite(consts.START_SPRITES.get(s), name=s)
             self.menu_items.add(sprite)
 
             #to calculate evenly percentages, 20, 40, 60, 80
