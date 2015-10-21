@@ -12,6 +12,22 @@ class MultipleChoiceQuizBase(object):
         if not dont_load:
             self.load_questions()
 
+        self.max_lives = 3
+        self.current_lives = self.max_lives
+        self.score = 0
+
+    def win(self):
+        self.score += 1
+
+    def loss(self):
+        self.current_lives -= 1
+
+    def game_over(self):
+        return self.current_lives < 1
+
+    def has_won(self):
+        return len(self.questions) == 0
+
     def load_questions(self):
         self.questions = load_json(self.asset_file)
         #randomizing the list
@@ -32,21 +48,11 @@ class SabioData(MultipleChoiceQuizBase):
 
     def __init__(self, dont_load=False):
         super(SabioData, self).__init__('sabio.json', dont_load)
-        self.max_lives = 3
-        self.current_lives = self.max_lives
-        self.score = 0
 
-    def win(self):
-        self.score += 1
+class PoetaData(MultipleChoiceQuizBase):
 
-    def loss(self):
-        self.current_lives -= 1
-
-    def game_over(self):
-        return self.current_lives < 1
-
-    def has_won(self):
-        return len(self.questions) == 0
+    def __init__(self, dont_load=False):
+        super(PoetaData, self).__init__('poeta.json', dont_load)
 
 #utils funtions
 def load_json(file_name):

@@ -19,15 +19,26 @@ CHARACTER_SPRITES = {
 }
 
 SABIO_SPRITES = {
-    'book': get_sprite_path('sabio', 'book.png'),
+    'icon': get_sprite_path('sabio', 'book.png'),
     'boy': get_sprite_path('sabio', 'boy.png'),
     'boy_life': get_sprite_path('sabio', 'boy-life.png'),
     'girl': get_sprite_path('sabio', 'girl.png'),
     'girl_life': get_sprite_path('sabio', 'girl-life.png'),
     'owl': get_sprite_path('sabio', 'owl.png'),
-    'checkbox': get_sprite_path('sabio', 'checkbox.png'),
-    'checkbox_checked': get_sprite_path('sabio', 'checkbox-checked.png'),
-    'checkbox_bad': get_sprite_path('sabio', 'checkbox-bad.png'),
+    'checkbox': get_sprite_path('common', 'checkbox.png'),
+    'checkbox_checked': get_sprite_path('common', 'checkbox-checked.png'),
+    'checkbox_bad': get_sprite_path('common', 'checkbox-bad.png'),
+}
+
+POETA_SPRITES = {
+    'icon': get_sprite_path('poeta', 'feather.png'),
+    'boy': get_sprite_path('poeta', 'boy.png'),
+    'boy_life': get_sprite_path('poeta', 'boy-life.png'),
+    'girl': get_sprite_path('poeta', 'girl.png'),
+    'girl_life': get_sprite_path('poeta', 'girl-life.png'),
+    'checkbox': get_sprite_path('common', 'checkbox.png'),
+    'checkbox_checked': get_sprite_path('common', 'checkbox-checked.png'),
+    'checkbox_bad': get_sprite_path('common', 'checkbox-bad.png'),
 }
 
 FONT_PATH = 'assets/fonts/PatuaOne-Regular.ttf'

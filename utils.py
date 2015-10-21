@@ -54,9 +54,17 @@ class ScreenBaseClass(BaseHelperClass):
     '''
     score_surface = None
     selected_character = None
+    lives_sprites = pygame.sprite.Group()
+    menu_items = pygame.sprite.Group()
+    current_question = None
 
     def __init__(self, screen):
         self.screen = screen
+
+    def show_lives_text(self):
+        self.show_text(str('VIDAS'), self.text_font,
+                       self.translate_percent(87, 2),
+                       COLORS['white'])
 
     def set_background(self):
         '''Sets the background on the screen'''
@@ -99,6 +107,22 @@ class ScreenBaseClass(BaseHelperClass):
             initial_location = (initial_location[0] + 55, initial_location[1])
 
         self.lives_sprites.draw(self.screen)
+
+    def next_question(self):
+        self.current_question = self.data.get_random_question()
+        self.display_reading(self.current_question.get('lectura', ''))
+
+    def level_finished_message(self, message):
+        surface = self.show_text_rect(message,
+                                      self.small_font, self.box_size,
+                                      self.box_pos,
+                                      COLORS['grey'], COLORS['white'],
+                                      justification=1, alpha=191,
+                                      parent_background=COLORS['yellow'],
+                                      parent_alpha=191)
+        pygame.display.update()
+        pygame.time.wait(consts.GAME_OVER_TIME)
+        return LevelSelectionScreen(self.screen).run()
 
 
     def detect_click(self):
