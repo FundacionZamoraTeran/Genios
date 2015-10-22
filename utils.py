@@ -1,6 +1,7 @@
 import sys
 import pygame
 from pygame.locals import QUIT
+import consts
 
 OLPC_SCREEN_SIZE = (1200, 900)
 
@@ -112,7 +113,7 @@ class ScreenBaseClass(BaseHelperClass):
         self.current_question = self.data.get_random_question()
         self.display_reading(self.current_question.get('lectura', ''))
 
-    def level_finished_message(self, message):
+    def level_finished_message(self, message, next_screen):
         surface = self.show_text_rect(message,
                                       self.small_font, self.box_size,
                                       self.box_pos,
@@ -122,7 +123,7 @@ class ScreenBaseClass(BaseHelperClass):
                                       parent_alpha=191)
         pygame.display.update()
         pygame.time.wait(consts.GAME_OVER_TIME)
-        return LevelSelectionScreen(self.screen).run()
+        return next_screen(self.screen).run()
 
 
     def detect_click(self):

@@ -81,12 +81,12 @@ class PoetaScreen(ScreenBaseClass):
             checkbox = ImageSprite(consts.POETA_SPRITES['checkbox_checked'], pos)
             self.update_score()
             if self.data.has_won():
-                self.level_finished_message(consts.WIN_MESSAGE)
+                self.level_finished_message(consts.WIN_MESSAGE, LevelSelectionScreen)
         else:
             self.data.loss()
             self.render_lives()
             if self.data.game_over():
-                self.level_finished_message(consts.GAME_OVER_MESSAGE)
+                self.level_finished_message(consts.GAME_OVER_MESSAGE, LevelSelectionScreen)
             else:
                 checkbox = ImageSprite(consts.POETA_SPRITES['checkbox_bad'], pos)
 
@@ -139,6 +139,7 @@ class PoetaScreen(ScreenBaseClass):
         #TODO agregar deteccion de click y boton para siguiente
         words = len(reading.split(' '))
         time_to_wait = int(words * self.seconds_per_word * 1000)
+        time_to_wait = 2000
         pygame.time.wait(time_to_wait)
         #display question
 
@@ -267,6 +268,7 @@ class SabioScreen(ScreenBaseClass):
         #TODO agregar deteccion de click y boton para siguiente
         words = len(reading.split(' '))
         time_to_wait = int(words * self.seconds_per_word * 1000)
+        time_to_wait = 2000
         pygame.time.wait(time_to_wait)
         #display question
 
