@@ -212,12 +212,12 @@ class SabioScreen(ScreenBaseClass):
             checkbox = ImageSprite(consts.SABIO_SPRITES['checkbox_checked'], pos)
             self.update_score()
             if self.data.has_won():
-                self.level_finished_message(consts.WIN_MESSAGE)
+                self.level_finished_message(consts.WIN_MESSAGE, LevelSelectionScreen)
         else:
             self.data.loss()
             self.render_lives()
             if self.data.game_over():
-                self.level_finished_message(consts.GAME_OVER_MESSAGE)
+                self.level_finished_message(consts.GAME_OVER_MESSAGE, LevelSelectionScreen)
             else:
                 checkbox = ImageSprite(consts.SABIO_SPRITES['checkbox_bad'], pos)
 
