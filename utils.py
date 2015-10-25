@@ -259,6 +259,66 @@ class ScreenBaseClass(BaseHelperClass):
 
         return surface
 
+    def display_reading(self, reading):
+        surface = self.show_text_rect(reading,
+                                      self.small_font, self.box_size,
+                                      self.box_pos,
+                                      COLORS['grey'], COLORS['white'],
+                                      justification=1, alpha=191,
+                                      parent_background=COLORS['yellow'],
+                                      parent_alpha=191)
+        pygame.display.update()
+        #TODO agregar deteccion de click y boton para siguiente
+        words = len(reading.split(' '))
+        time_to_wait = int(words * self.seconds_per_word * 1000)
+        time_to_wait = 2000
+        pygame.time.wait(time_to_wait)
+        #display question
+
+        self.display_question(self.current_question.get('pregunta'))
+
+
+    def display_question(self, question, sprite_dict, pos):
+        surface = self.show_text_rect(question,
+                                      self.small_font, self.box_size,
+                                      self.box_pos,
+                                      COLORS['grey'], COLORS['white'],
+                                      justification=1, alpha=191,
+                                      parent_background=COLORS['yellow'],
+                                      parent_alpha=191)
+        #agregar sprites de opcion de menu
+        #pos = self.translate_percent(30, 40)
+        for i, option in enumerate(self.current_question.get('opciones')):
+            checkbox = ImageSprite(sprite_dict['checkbox'], pos, name=str(i))
+            self.menu_items.add(checkbox)
+            self.screen.blit(checkbox.image, checkbox.rect)
+            text_pos = (pos[0]+40, pos[1]-3)
+
+            #separamos texto largote
+            if len(option) > self.max_question_chars:
+                lines = []
+                new_option = ''
+                tmp_len = len(new_option)
+                for word in option.split(' '):
+                    tmp_len = len(new_option)
+                    if (tmp_len + len(word) + 1) < self.max_question_chars:
+                        new_option += ' ' + word
+                    else:
+                        lines.append(new_option)
+                        new_option = word
+                lines.append(new_option)
+
+                for line in lines:
+                    self.show_text(line, self.small_font, text_pos, COLORS['grey'])
+                    pos = (pos[0], pos[1] + 30)
+                    text_pos = (pos[0]+40, pos[1]-3)
+            else:
+                self.show_text(option, self.small_font, text_pos, COLORS['grey'])
+                pos = (pos[0], pos[1] + 60)
+
+        pygame.display.update()
+
+        self.detect_click()
 
 CURSOR = (
         "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  ",

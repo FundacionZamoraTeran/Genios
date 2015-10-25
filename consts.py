@@ -41,6 +41,17 @@ POETA_SPRITES = {
     'checkbox_bad': get_sprite_path('common', 'checkbox-bad.png'),
 }
 
+CUENTERO_SPRITES = {
+    'icon': get_sprite_path('poeta', 'feather.png'),
+    'boy': get_sprite_path('poeta', 'boy.png'),
+    'boy_life': get_sprite_path('poeta', 'boy-life.png'),
+    'girl': get_sprite_path('poeta', 'girl.png'),
+    'girl_life': get_sprite_path('poeta', 'girl-life.png'),
+    'checkbox': get_sprite_path('common', 'checkbox.png'),
+    'checkbox_checked': get_sprite_path('common', 'checkbox-checked.png'),
+    'checkbox_bad': get_sprite_path('common', 'checkbox-bad.png'),
+}
+
 FONT_PATH = 'assets/fonts/PatuaOne-Regular.ttf'
 
 BOY = 'boy'

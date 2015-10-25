@@ -54,6 +54,13 @@ class PoetaData(MultipleChoiceQuizBase):
     def __init__(self, dont_load=False):
         super(PoetaData, self).__init__('poeta.json', dont_load)
 
+class CuenteroData(MultipleChoiceQuizBase):
+
+    def __init__(self, dont_load=False):
+        super(CuenteroData, self).__init__('cuentero.json', dont_load)
+
+
+
 #utils funtions
 def load_json(file_name):
     contents = open("data/%s" % file_name, 'r').read()
