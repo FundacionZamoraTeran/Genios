@@ -1,9 +1,13 @@
 import sys
 import pygame
 from pygame.locals import QUIT
+from gi.repository import Gtk
 import consts
 
 OLPC_SCREEN_SIZE = (1200, 900)
+
+import logging
+_logger = logging.getLogger('genio-activity')
 
 class ImageSprite(pygame.sprite.Sprite):
     '''Class to create a background image'''
@@ -34,8 +38,8 @@ class BaseHelperClass(object):
 
     def translate_percent(self, width, height):
         '''translates percentages to screen positions'''
-        x = (width / 100) * self.width
-        y = (height / 100) * self.height
+        x = (width / 100.0) * self.width
+        y = (height / 100.0) * self.height
         return x, y
 
     def translate_percent_centered(self, width, height, rect):
@@ -44,8 +48,8 @@ class BaseHelperClass(object):
         using the sprite center as point instead of top corner
         '''
         x, y = self.translate_percent(width, height)
-        x = x - (rect.width/2)
-        y = y - (rect.height/2)
+        x = x - (rect.width/2.0)
+        y = y - (rect.height/2.0)
         return x, y
 
 class ScreenBaseClass(BaseHelperClass):
@@ -129,16 +133,27 @@ class ScreenBaseClass(BaseHelperClass):
     def detect_click(self):
         '''Event loop to detect clicks'''
         while True:
+            #hack para sugargame
+            while Gtk.events_pending():
+                Gtk.main_iteration()
+
             for event in pygame.event.get():
                 if event.type == QUIT:
-                    pygame.quit()
-                if event.type == pygame.MOUSEBUTTONUP:
+                    try:
+                        pygame.quit()
+                        sys.exit()
+                        return
+                    except Exception, e:
+                        return
+                elif event.type == pygame.MOUSEBUTTONUP:
                     pos = pygame.mouse.get_pos()
                     clicked_sprites = [s for s in self.menu_items \
                                        if s.rect.collidepoint(pos)]
                     for s in clicked_sprites:
                         self.click_callback(s)
                         break
+                else:
+                    continue
 
     def show_text(self, text, font, pos=(0, 0), color=(255, 255, 255)):
         sprite = font.render(text, 1, color)

@@ -7,3 +7,5 @@ icon = activity-icon
 show_launcher = yes
 max_participants = 1
 summary = Desarrollar habilidades en la fluidez y comprensión lectora
+exec = sugar-activity genios_activity.GenioActivity
+license = GPL+

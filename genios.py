@@ -5,14 +5,14 @@ import sys
 import pygame
 from pygame.locals import QUIT
 
+from gi.repository import Gtk
+
 from engine import SabioData, PoetaData, CuenteroData
 from utils import ImageSprite, BaseHelperClass, ScreenBaseClass, CURSOR, COLORS
 
 import consts
 
-
 selected_character = None
-
 
 class CharacterSelectionScreen(ScreenBaseClass):
     '''
@@ -315,19 +315,20 @@ class LevelSelectionScreen(ScreenBaseClass):
             elif sprite.name == 'book':
                 CuenteroScreen(self.screen).run()
             self.menu_items.empty()
-            print("Cargamos nuevo nivel")
 
 class MainClass(BaseHelperClass):
     '''Main Class that starts the game'''
 
-    def __init__(self):
+    def __init__(self, init_pygame=False):
         '''Start screen init'''
-        pygame.init()
-        self.cursor = pygame.cursors.compile(CURSOR)
-        pygame.mouse.set_cursor((32,32), (1,1), *self.cursor)
-        self.screen = pygame.display.set_mode((self.width, self.height))
-        pygame.display.set_caption('Genios')
-        pygame.display.update()
+        #Hack para sugargame
+        if init_pygame:
+            pygame.init()
+            self.screen = pygame.display.set_mode((self.width, self.height))
+            pygame.display.set_caption('Genios')
+            pygame.display.update()
+        else:
+            self.screen = None
 
     def start_screen(self):
         '''Runs the main game'''
@@ -336,13 +337,26 @@ class MainClass(BaseHelperClass):
 
     def main(self):
         '''Runs main loop and stuff'''
+        self.cursor = pygame.cursors.compile(CURSOR)
 
+        #Hack para sugargame
+        if not self.screen:
+            self.screen = pygame.display.get_surface()
+
+        pygame.mouse.set_cursor((32,32), (1,1), *self.cursor)
         self.start_screen()
         while True:
+            while Gtk.events_pending():
+                Gtk.main_iteration()
+
             for event in pygame.event.get():
                 if event.type == QUIT:
-                    pygame.quit()
+                    try:
+                        pygame.quit()
+                    except:
+                        pass
                     sys.exit()
+                    break
 
 if __name__ == '__main__':
-    MainClass().main()
+    MainClass(init_pygame=True).main()
