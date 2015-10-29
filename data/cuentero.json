@@ -1,8 +1,62 @@
 [
   {
-  "lectura": "Había una vez una vaca en la quebrada de Humahuaca.  Como era muy vieja, muy vieja, estaba sorda de una oreja.  Y a pesar que ya era abuela un día quiso ir a la escuela.  Se puso unos zapatos rojos, guantes de tul y un par de anteojos.  La vio la maestra asustada y dijo: - Estás equivocada.  Y la vaca le respondió: - ¿Por qué no puedo estudiar yo?.  La vaca, vestida de blanco, se acomodó en el primer banco.  Los chicos tirabamos tiza y nos moríamos de risa.  La gente se fue muy curiosa a ver la vaca estudiosa.  La gente llegaba en camiones, en bicicletas y en aviones.  Y como el bochinche aumentaba en la escuela ya nadie estudiaba.  La vaca, de pie en un rincón, rumiaba sola la lección.  Un día toditos los chicos se convirtieron en borricos.  Y en ese lugar de Humahuca la única sabia fue la vaca. \n\n LA VACA ESTUDIOSA.  María Elena Walsh - Argentina",
+  "lectura": "Había una vez una vaca en la quebrada de Humahuaca. Como era muy vieja, muy vieja, estaba sorda de una oreja. Y a pesar que ya era abuela un día quiso ir a la escuela. Se puso unos zapatos rojos, guantes de tul y un par de anteojos. La vio la maestra asustada y dijo: - Estás equivocada. Y la vaca le respondió: - ¿Por qué no puedo estudiar yo?. La vaca, vestida de blanco, se acomodó en el primer banco. Los chicos tirabamos tiza y nos moríamos de risa. La gente se fue muy curiosa a ver la vaca estudiosa. La gente llegaba en camiones, en bicicletas y en aviones. Y como el bochinche aumentaba en la escuela ya nadie estudiaba. La vaca, de pie en un rincón, rumiaba sola la lección. Un día toditos los chicos se convirtieron en borricos. Y en ese lugar de Humahuca la única sabia fue la vaca.LA VACA ESTUDIOSA. \n\n María Elena Walsh - Argentina.",
   "pregunta": "¿Por qué en Humahuaca la única sabia fue la vaca?",
   "opciones": ["Porque en la escuela era la única que estudiaba.", "Porque los niños eran borricos.", "Porque llegaban muchos visitantes a la escuela."],
-  "respuesta": 0 
+  "respuesta": 0
+  },
+  {
+  "lectura": "Señora tortuga, ¿por qué usted camina con su escudo a cuestas? Debe ser sin duda, una gran guerrera. Descúbrase, amiga, y deje que el mundo mire su belleza. — Gracias, señor zorro, solo usted me dice palabras tan tiernas. Voy a descubrirme, porque, como toda mujer, soy coqueta. Pero antes permita que me asee un poco, mirando el espejo del agua serena. Súbase a mi lomo, lo llevaré al río a dar una vuelta.— — Usted es un cisne.— — Y usted es un rayo de luna que besa.— Y va la tortuga con el zorro a cuestas. Pero en medio vado, lo tira a las aguas y se da la vuelta. — ¡Usted no me engaña, señor zalamero, yo no soy el cuervo de la fabuleja!... Ya que pretendía tan solo almorzarme, ¡ahora los peces a usted se lo almuerzan!\n\n  EL ZORRO Y LA TORTUGA - Oscar Alfaro. Bolivia",
+  "pregunta": "¿Cómo pretendía engañar el zorro a la tortuga?",
+  "opciones": ["Coqueteándole para que quede indefensa sin su caparazón.", "Llevándola al agua para que se ahogue.", "Conviertiéndose en su amigo para engañarla."],
+  "respuesta": 0
+  },
+  {
+  "lectura": "Una bruja no siempre tiene escoba, me parece, puede andar en su bici a cien por hora y frenar con la suela de sus tenis, si los tiene. \n\n UNA BRUJA. Leidi Ng - República Dominicana",
+  "pregunta": "La bruja anda a cien por hora:",
+  "opciones": ["En bici ", "En escoba", "En moto"],
+  "respuesta": 0
+  },
+  {
+  "lectura": "Momo sabía escuchar de tal manera que a la gente tonta se le ocurrían, de repente, ideas muy inteligentes. No porque dijera o preguntara algo que llevara a los demás a pensar esas ideas, no; simplemente estaba allí y escuchaba con toda su atención y toda simpatía. Mientras tanto miraba al otro con sus grandes ojos negros y el otro en cuestión notaba de inmediato cómo se le ocurrían pensamientos que nunca hubiera creído que estaban en él. Sabía escuchar de tal manera que la gente perpleja o indecisa sabía muy bien, de repente, qué era lo que quería. O los tímidos se sentían de súbito muy libres y valerosos. O los desgraciados y agobiados se volvían confiados y alegres. Y si alguien creía que su vida estaba totalmente perdida y que era insignificante y que él mismo no era más que uno entre millones, y que no importaba nada y que se podía sustituir con la misma facilidad que una maceta rota, iba y le contaba todo eso a la pequeña Momo, y le resultaba claro, de modo misterioso mientras hablaba, que tal como era sólo había uno entre todos los hombres y que, por eso, era importante a su manera, para el mundo. \n\n MOMO (Fragmento).  Michael Ende. Alemania.",
+  "pregunta": "¿Por qué a las personas se le ocurrían cosas muy inteligentes con la pequeña Momo?",
+  "opciones": ["Porque Momo les hacía muy buenas preguntas.", "Porque Momo les transmitía su sabiduría.", "Porque Momo sabia escucharlas y los hacia sentir importantes."],
+  "respuesta": 2
+  },
+  {
+  "lectura": "Me dijeron que en el Reino del Revés nada el pájaro y vuela el pez, que los gatos no hacen miau y dicen yes, porque estudian mucho inglés.  Vamos a ver cómo es el Reino del Revés. Me dijeron que en el Reino del Revés nadie baila con los pies, que un ladrón es vigilante y otro es juez, y que dos y dos son tres. Vamos a ver cómo es el Reino del Revés. Me dijeron que en el Reino del Revés cabe un oso en una nuez, que usan barbas y bigotes los bebés y que un año dura un mes.  Vamos a ver cómo es el Reino del Revés. \n\n EL REINO DEL REVÉS (fragmento). María Elena Walsh - Argentina",
+  "pregunta": "Según el texto, en el Reino del Revés:",
+  "opciones": ["Nadan los pájaros, los peces vuelan, dos y dos son tres.", "Los ladrones roban, los pájaros vuelan, los osos comen nueces.", "Los gatos dicen miau, se baila con los pies, se habla inglés."],
+  "respuesta": 0
+  },
+  {
+  "lectura": "En el país del Nomeacuerdo doy tres pasitos y me pierdo. Un pasito para allí, no recuerdo si lo di. Un pasito para allá, ay que miedo que me da. Un pasito para atrás y no doy ninguno más porque ya, ya me olvidé  dónde puse el otro pie. \n\n EN EL PAÍS DEL NOMEACUERDO. María Elena Walsh - Argentina",
+  "pregunta": "¿Por qué se llama el país del Nomeacuerdo?",
+  "opciones": ["Porque todo se olvida al instante.", "Porque se enredan al caminar.", "Porque se siente el miedo al caminar."],
+  "respuesta": 0
+  },
+  {
+  "lectura": "—¿A dónde vas, Cocuyo, mi buen amigo? —A prestarle a la noche mi farolito. —Y tú, ¿qué andas haciendo compadre Grillo? —Ensayaba un concierto para un amigo, pero la partitura se me ha perdido. —Te ayudaré a buscarla muy complacido entre el húmedo musgo del caminito. Y se van de la mano Cocuyo y Grillo, a través de la noche negra de frío. \n\n GRILLITO Y COCUYO - Raul Sanchez Acosta",
+  "pregunta": "¿A qué ayudó Cocuyo al Grillo?",
+  "opciones": ["A buscar la partitura con su farolito.", "A llegar a su casa pues tenía frío.", "A encontrar el musgo del caminito."],
+  "respuesta": 0
+  },
+  {
+  "lectura": "Estando una mañana haciendo el bobo le entró un hambre espantosa al Señor Lobo, así que, para echarse algo a la muela, se fue corriendo a casa de la Abuela. \"¿Puedo pasar, Señora?\", preguntó. La pobre anciana, al verlo, se asustó pensando: \"¡Este me come de un bocado!\". Y, claro, no se había equivocado: se convirtió la Abuela en alimento en menos tiempo del que aquí te cuento. Lo malo es que era flaca y tan huesuda que al Lobo no le fue de gran ayuda: \"Sigo teniendo un hambre aterradora... ¡Tendré que merendarme otra señora!\". Y, al no encontrar ninguna en la nevera, gruñó con impaciencia aquella fiera: \"¡Esperaré sentado hasta que vuelva Caperucita Roja de la Selva!\" -que así llamaba al Bosque la alimaña, creyéndose en Brasil y no en España-. Y porque no se viera su fiereza, se disfrazó de abuela con presteza, se dio laca en las uñas y en el pelo, se puso la gran falda gris de vuelo, zapatos, sombrerito, una chaqueta y se sentó en espera de la nieta. Llegó por fin Caperu a mediodía y dijo: \"¿Cómo estás, abuela mía? Por cierto, ¡me impresionan tus orejas!\"... \n\n CUENTOS EN VERSO PARA NIÑOS PERVERSOS (fragmento). Caperucita Roja y el Lobo. Roald Dahl",
+  "pregunta": "¿Por qué el lobo quería merendarse a otra señora?",
+  "opciones": ["Porque era un lobo muy glotón.", "Porque la abuela era muy flaca", "Porque también quería comerce a Caperucita Roja"],
+  "respuesta": 1
+  },
+  {
+  "lectura": "—Adiós —le dijo a la flor. Esta no respondió. —Adiós —repitió el principito. La flor tosió, pero no porque estuviera resfriada. —He sido una tonta —le dijo al fin la flor—. Perdóname. Procura ser feliz. Se sorprendió por la ausencia de reproches y quedó desconcertado, con el fanal en el aire, no comprendiendo esta tranquila mansedumbre. —Sí, yo te quiero —le dijo la flor—, ha sido culpa mía que tú no lo sepas; pero eso no tiene importancia. Y tú has sido tan tonto como yo. Trata de ser feliz. . . Y suelta de una vez ese fanal; ya no lo quiero. —Pero el viento... —No estoy tan resfriada como para... El aire fresco de la noche me hará bien. Soy una flor. —Y los animales... —Será necesario que soporte dos o tres orugas, si quiero conocer las mariposas; creo que son muy hermosas. Si no ¿quién vendrá a visitarme? Tú estarás muy lejos. En cuanto a las fieras, no las temo: yo tengo mis garras. Y le mostraba ingenuamente sus cuatro espinas. Luego añadió: —Y no prolongues más tu despedida. Puesto que has decidido partir, vete de una vez. La flor no quería que la viese llorar: era tan orgullosa...  \n\n EL PRINCIPITO (fragmento). Antoine De Saint - Exupéry.  Francia.",
+  "pregunta": "¿Por qué la flor y el principito estaban tristes?",
+  "opciones": ["Porque la flor era muy orgullosa.", "Porque se estaban despidiendo.", "Porque  la flor estaba resfriada."],
+  "respuesta": 1
+  },
+  {
+  "lectura": "¡Ay, este hermano siamés, unido a mi por los pies! —¡Que me dejes! ¡No te quiero! Pero me sigue callado, lo mismo que un perro negro. Lo apedreo con estrellas y lo lleno de agujeros, lo llevo contra las rejas y le rayo todo el cuerpo. Pero me sigue los pasos, como el alma del silencio. Al filo de media noche despierto... Y está a mi lado dormido mi hermano negro. \n\n MI SOMBRA. Osca Alfaro. Bolivia",
+  "pregunta": "¿Quién es el hermano siamés?",
+  "opciones": ["El perro negro", "La sombra", "Un hermano negro"],
+  "respuesta": 1
   }
 ]
