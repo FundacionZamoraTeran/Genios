@@ -1,6 +1,9 @@
+import json
+import unittest
+import os
+
 from . import engine
 
-import unittest
 class MultipleChoiceQuizBaseTests(unittest.TestCase):
     '''Tests for MultipleChoiceQuizBase'''
     asset_file = 'sabio.json'
@@ -37,3 +40,29 @@ class EngineTests(unittest.TestCase):
     def test_load_json(self):
         obj = engine.load_json('sabio.json')
         self.assertEquals(type(obj), list)
+
+    def test_empty_game_state(self):
+        gs = engine.GameState()
+        data = json.loads(gs.to_json())
+
+        self.assertEquals(data['available_levels'], gs.available_levels)
+        self.assertEquals(data['locked_levels'], gs.locked_levels)
+
+    def test_game_state_init(self):
+        gs = engine.GameState(available_levels = ['lol', 'foo', 'bar'], locked_levels=['castle'])
+        data = json.loads(gs.to_json())
+
+        self.assertEquals(data['available_levels'], gs.available_levels)
+        self.assertEquals(data['locked_levels'], gs.locked_levels)
+
+    def test_save_data(self):
+        gs = engine.GameState(available_levels = ['lol', 'foo', 'bar'], locked_levels=['castle'])
+        gs.save()
+
+        self.assertTrue(os.path.exists('data/savegame.json'))
+
+    def test_load_data(self):
+        gs = engine.GameState(available_levels = ['lol', 'foo', 'bar'], locked_levels=['castle'])
+        gs.save()
+
+        self.assertTrue(os.path.exists('data/savegame.json'))

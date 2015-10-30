@@ -22,3 +22,9 @@ class GenioActivity(activity.Activity):
 
         # Start the game running.
         self._pygamecanvas.run_pygame(self.game.main)
+
+    #def read_file(self, path):
+    #    self.game.read_file(path, use_sugar=True):
+
+    #def write_file(self, path):
+    #    self.game.write_file(path, use_sugar=True):

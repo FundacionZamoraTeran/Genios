@@ -61,6 +61,7 @@ class CuenteroScreen(ScreenBaseClass):
     seconds_per_word = 0.1 #60/20
     box_size = (840, 550)
     max_question_chars = 50
+    LEVEL_NAME = 'book'
 
     def __init__(self, screen):
         super(CuenteroScreen, self).__init__(screen)
@@ -131,6 +132,7 @@ class PoetaScreen(ScreenBaseClass):
     seconds_per_word = 0.1 #60/20
     box_size = (750, 450)
     max_question_chars = 50
+    LEVEL_NAME = 'feather'
 
     def __init__(self, screen):
         super(PoetaScreen, self).__init__(screen)
@@ -208,6 +210,7 @@ class SabioScreen(ScreenBaseClass):
     seconds_per_word = 0.1 #60/20
     box_size = (500, 300)
     max_question_chars = 30
+    LEVEL_NAME = 'cloud'
 
     def __init__(self, screen):
         super(SabioScreen, self).__init__(screen)
@@ -279,8 +282,9 @@ class SabioScreen(ScreenBaseClass):
 class GenioScreen(ScreenBaseClass):
     background_src= 'assets/img/backgrounds/genio.png'
     seconds_per_word = 0.1 #60/20
-    box_size = (500, 300)
-    max_question_chars = 30
+    box_size = (600, 300)
+    max_question_chars = 40
+    LEVEL_NAME = 'lamp'
 
     def __init__(self, screen):
         super(GenioScreen, self).__init__(screen)
@@ -288,7 +292,9 @@ class GenioScreen(ScreenBaseClass):
         self.text_font = pygame.font.Font(consts.FONT_PATH, 40)
         self.small_font = pygame.font.Font(consts.FONT_PATH, 24)
         self.selected_character = selected_character
-        self.box_pos = self.translate_percent(13, 30)
+        self.box_pos = self.translate_percent(10, 30)
+        self.dialog_pos = self.translate_percent(20, 15)
+        self.dialog = ImageSprite(consts.GENIO_SPRITES['dialog'], self.dialog_pos)
 
     def play_audio(self, audio_name):
         path =  'assets/audio/%s'  % audio_name
@@ -339,6 +345,10 @@ class GenioScreen(ScreenBaseClass):
                          self.translate_percent_centered(15, 83,
                                                          character.rect))
 
+        genie = ImageSprite(consts.GENIO_SPRITES['genie'])
+        self.screen.blit(genie.image, self.translate_percent(65, 17))
+
+
         #TODO: mostrar al genio
 
         #displaying score
@@ -367,11 +377,21 @@ class GenioScreen(ScreenBaseClass):
         self.screen.blit(self.background, parent_pos, parent_rect)
         pygame.display.update(parent_rect)
 
+    def show_dialog(self):
+        self.screen.blit(self.dialog.image, self.dialog_pos)
+        pygame.display.update()
+
+    def clean_dialog(self):
+        self.screen.blit(self.background, self.dialog_pos, self.dialog.rect)
+        pygame.display.update()
+
     def next_question(self):
         self.clean_question()
+        self.show_dialog()
         self.current_question = self.data.get_random_question()
         #tocamos el audio
         self.play_audio(self.current_question.get('audio'))
+        self.clean_dialog()
         self.display_question(self.current_question.get('pregunta'))
 
 

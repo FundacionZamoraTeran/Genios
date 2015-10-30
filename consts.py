@@ -61,6 +61,8 @@ GENIO_SPRITES = {
     'checkbox': get_sprite_path('common', 'checkbox.png'),
     'checkbox_checked': get_sprite_path('common', 'checkbox-checked.png'),
     'checkbox_bad': get_sprite_path('common', 'checkbox-bad.png'),
+    'genie': get_sprite_path('genio', 'genio.png'),
+    'dialog': get_sprite_path('genio', 'dialogo.png'),
 }
 
 FONT_PATH = 'assets/fonts/PatuaOne-Regular.ttf'

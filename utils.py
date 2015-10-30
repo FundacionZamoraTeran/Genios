@@ -35,6 +35,7 @@ class BaseHelperClass(object):
     need to improve the name of this
     '''
     width, height = OLPC_SCREEN_SIZE
+    game_state = None
 
     def translate_percent(self, width, height):
         '''translates percentages to screen positions'''
@@ -52,6 +53,14 @@ class BaseHelperClass(object):
         y = y - (rect.height/2.0)
         return x, y
 
+    #def read_file(self):
+    #    '''Sugar functions to read data from the diary'''
+    #    self.game_state.load()
+
+    #def write_file(self):
+    #    '''Sugar functions to write data from the diary'''
+    #    self.game_state.save()
+
 class ScreenBaseClass(BaseHelperClass):
     '''
     Base class to draw screens it contains
@@ -65,6 +74,7 @@ class ScreenBaseClass(BaseHelperClass):
 
     def __init__(self, screen):
         self.screen = screen
+
 
     def show_lives_text(self):
         self.show_text(str('VIDAS'), self.text_font,
