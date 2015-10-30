@@ -296,7 +296,6 @@ class ScreenBaseClass(BaseHelperClass):
         #TODO agregar deteccion de click y boton para siguiente
         words = len(reading.split(' '))
         time_to_wait = int(words * self.seconds_per_word * 1000)
-        time_to_wait = 2000
         pygame.time.wait(time_to_wait)
         #display question
 

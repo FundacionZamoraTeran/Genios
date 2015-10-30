@@ -58,7 +58,7 @@ class CharacterSelectionScreen(ScreenBaseClass):
 
 class CuenteroScreen(ScreenBaseClass):
     background_src= 'assets/img/backgrounds/cuentero.png'
-    seconds_per_word = 0.1 #60/20
+    seconds_per_word = 60/70.0
     box_size = (840, 550)
     max_question_chars = 50
     LEVEL_NAME = 'book'
@@ -130,7 +130,7 @@ class CuenteroScreen(ScreenBaseClass):
 
 class PoetaScreen(ScreenBaseClass):
     background_src= 'assets/img/backgrounds/poeta.png'
-    seconds_per_word = 0.1 #60/20
+    seconds_per_word = 60/50.0
     box_size = (750, 450)
     max_question_chars = 50
     LEVEL_NAME = 'feather'
@@ -209,7 +209,7 @@ class PoetaScreen(ScreenBaseClass):
 
 class SabioScreen(ScreenBaseClass):
     background_src= 'assets/img/backgrounds/sabio.png'
-    seconds_per_word = 0.1 #60/20
+    seconds_per_word = 60/20.0
     box_size = (500, 300)
     max_question_chars = 30
     LEVEL_NAME = 'cloud'
