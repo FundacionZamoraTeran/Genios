@@ -7,7 +7,7 @@ from pygame.locals import QUIT
 
 from gi.repository import Gtk
 
-from engine import SabioData, PoetaData, CuenteroData, GenioData
+from engine import SabioData, PoetaData, CuenteroData, GenioData, GameState
 from utils import ImageSprite, BaseHelperClass, ScreenBaseClass, CURSOR, COLORS
 
 import consts
@@ -82,6 +82,7 @@ class CuenteroScreen(ScreenBaseClass):
             checkbox = ImageSprite(consts.CUENTERO_SPRITES['checkbox_checked'], pos)
             self.update_score()
             if self.data.has_won():
+                self.data.game_state.unlock_next_level(self.LEVEL_NAME)
                 self.level_finished_message(consts.WIN_MESSAGE, LevelSelectionScreen)
         else:
             self.data.loss()
@@ -153,6 +154,7 @@ class PoetaScreen(ScreenBaseClass):
             checkbox = ImageSprite(consts.POETA_SPRITES['checkbox_checked'], pos)
             self.update_score()
             if self.data.has_won():
+                self.data.game_state.unlock_next_level(self.LEVEL_NAME)
                 self.level_finished_message(consts.WIN_MESSAGE, LevelSelectionScreen)
         else:
             self.data.loss()
@@ -231,6 +233,7 @@ class SabioScreen(ScreenBaseClass):
             checkbox = ImageSprite(consts.SABIO_SPRITES['checkbox_checked'], pos)
             self.update_score()
             if self.data.has_won():
+                self.data.game_state.unlock_next_level(self.LEVEL_NAME)
                 self.level_finished_message(consts.WIN_MESSAGE, LevelSelectionScreen)
         else:
             self.data.loss()
@@ -314,6 +317,7 @@ class GenioScreen(ScreenBaseClass):
             checkbox = ImageSprite(consts.GENIO_SPRITES['checkbox_checked'], pos)
             self.update_score()
             if self.data.has_won():
+                self.data.game_state.unlock_next_level(self.LEVEL_NAME)
                 self.level_finished_message(consts.WIN_MESSAGE, LevelSelectionScreen)
         else:
             self.data.loss()
@@ -399,13 +403,23 @@ class LevelSelectionScreen(ScreenBaseClass):
     background_src = 'assets/img/backgrounds/sabio.png'
     menu_items = pygame.sprite.Group()
 
+    def get_level_list(self):
+        level_list = []
+        gs = GameState()
+        gs.load()
+        level_list = gs.available_levels[:]
+        for level in gs.locked_levels:
+            level_list.append('%s_locked' % level)
+
+        return level_list
+
     def run(self):
         '''runs the screen'''
         self.set_background()
         mundos = ImageSprite(consts.START_SPRITES['mundos'])
         self.screen.blit(mundos.image, self.translate_percent_centered(50, 20, mundos.rect))
-        #TODO: get this list from saved game data
-        for i, s in enumerate(['cloud', 'book', 'feather', 'lamp']):
+        self.menu_items.empty()
+        for i, s in enumerate(self.get_level_list()):
             sprite = ImageSprite(consts.START_SPRITES.get(s), name=s)
             self.menu_items.add(sprite)
 

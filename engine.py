@@ -12,7 +12,7 @@ class GameState(object):
 
     def __init__(self, *args, **kwargs):
         if kwargs.get('load'):
-            pass
+            self.load()
         else:
             self.available_levels = kwargs.get('available_levels', self.default_data['available_levels'])
             self.locked_levels = kwargs.get('locked_levels', self.default_data['locked_levels'])
@@ -33,17 +33,18 @@ class GameState(object):
             f = open(self.FILE_NAME, 'r')
             data = json.loads(f.read())
             f.close()
-            j
             self.available_levels = data.get('available_levels', self.default_data['available_levels'])
             self.locked_levels = data.get('locked_levels', self.default_data['locked_levels'])
-        except:
+        except Exception, e:
             data = self.default_data
 
-game_state_singleton = GameState()
-
-def get_game_state(self):
-    global game_state_singleton
-    return game_state_singleton
+    def unlock_next_level(self, current_level):
+        self.load()
+        last_available_level = self.available_levels[len(self.available_levels) - 1]
+        if last_available_level ==  current_level and self.locked_levels:
+            next_level = self.locked_levels.pop(0)
+            self.available_levels.append(next_level)
+            self.save()
 
 
 class MultipleChoiceQuizBase(object):
@@ -89,12 +90,12 @@ class MultipleChoiceQuizBase(object):
         self.used_questions.append(question)
         return question
 
-    def read_file(self, path, use_sugar=False):
-        pass
-
-    def write_file(self, path, use_sugar=False):
-        '''this should be called when the user gain a new level'''
-        pass
+    def add_new_level(self, next_level):
+        if self.game.locked_levels:
+            next_level = self.game.locked_levels.pop()
+            if next_level not in self.game.available_levels():
+                self.game.available_levels.append(next_level)
+                self.game.save()
 
 class SabioData(MultipleChoiceQuizBase):
 

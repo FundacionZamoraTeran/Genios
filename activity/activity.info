@@ -1,6 +1,6 @@
 [Activity]
 name = Genios
-activity_version = 1
+activity_version = 2 
 bundle_id = org.sugarlabs.genios
 exec = sugar-activity-web
 icon = activity-icon
