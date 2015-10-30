@@ -19,7 +19,7 @@ CHARACTER_SPRITES = {
 }
 
 SABIO_SPRITES = {
-    'icon': get_sprite_path('sabio', 'book.png'),
+    'icon': get_sprite_path('sabio', 'cloud.png'),
     'boy': get_sprite_path('sabio', 'boy.png'),
     'boy_life': get_sprite_path('sabio', 'boy-life.png'),
     'girl': get_sprite_path('sabio', 'girl.png'),
@@ -42,11 +42,22 @@ POETA_SPRITES = {
 }
 
 CUENTERO_SPRITES = {
-    'icon': get_sprite_path('poeta', 'feather.png'),
-    'boy': get_sprite_path('poeta', 'boy.png'),
-    'boy_life': get_sprite_path('poeta', 'boy-life.png'),
-    'girl': get_sprite_path('poeta', 'girl.png'),
-    'girl_life': get_sprite_path('poeta', 'girl-life.png'),
+    'icon': get_sprite_path('cuentero', 'book.png'),
+    'boy': get_sprite_path('cuentero', 'boy.png'),
+    'boy_life': get_sprite_path('cuentero', 'boy-life.png'),
+    'girl': get_sprite_path('cuentero', 'girl.png'),
+    'girl_life': get_sprite_path('cuentero', 'girl-life.png'),
+    'checkbox': get_sprite_path('common', 'checkbox.png'),
+    'checkbox_checked': get_sprite_path('common', 'checkbox-checked.png'),
+    'checkbox_bad': get_sprite_path('common', 'checkbox-bad.png'),
+}
+
+GENIO_SPRITES = {
+    'icon': get_sprite_path('genio', 'lamp.png'),
+    'boy': get_sprite_path('genio', 'boy.png'),
+    'boy_life': get_sprite_path('genio', 'boy-life.png'),
+    'girl': get_sprite_path('genio', 'girl.png'),
+    'girl_life': get_sprite_path('genio', 'girl-life.png'),
     'checkbox': get_sprite_path('common', 'checkbox.png'),
     'checkbox_checked': get_sprite_path('common', 'checkbox-checked.png'),
     'checkbox_bad': get_sprite_path('common', 'checkbox-bad.png'),
@@ -57,7 +68,7 @@ FONT_PATH = 'assets/fonts/PatuaOne-Regular.ttf'
 BOY = 'boy'
 GIRL = 'girl'
 
-GAME_OVER_TIME = 2000 #3 segundos
+GAME_OVER_TIME = 3000 #3 segundos
 MAX_QUESTION_CHARS = 30
 
 #messages

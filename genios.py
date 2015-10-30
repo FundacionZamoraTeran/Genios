@@ -7,7 +7,7 @@ from pygame.locals import QUIT
 
 from gi.repository import Gtk
 
-from engine import SabioData, PoetaData, CuenteroData
+from engine import SabioData, PoetaData, CuenteroData, GenioData
 from utils import ImageSprite, BaseHelperClass, ScreenBaseClass, CURSOR, COLORS
 
 import consts
@@ -59,7 +59,7 @@ class CharacterSelectionScreen(ScreenBaseClass):
 class CuenteroScreen(ScreenBaseClass):
     background_src= 'assets/img/backgrounds/cuentero.png'
     seconds_per_word = 0.1 #60/20
-    box_size = (800, 500)
+    box_size = (840, 550)
     max_question_chars = 50
 
     def __init__(self, screen):
@@ -68,7 +68,7 @@ class CuenteroScreen(ScreenBaseClass):
         self.text_font = pygame.font.Font(consts.FONT_PATH, 40)
         self.small_font = pygame.font.Font(consts.FONT_PATH, 24)
         self.selected_character = selected_character
-        self.box_pos = self.translate_percent(30, 20)
+        self.box_pos = self.translate_percent(25, 20)
 
     def click_callback(self, sprite):
         rect = sprite.rect
@@ -129,7 +129,7 @@ class CuenteroScreen(ScreenBaseClass):
 class PoetaScreen(ScreenBaseClass):
     background_src= 'assets/img/backgrounds/poeta.png'
     seconds_per_word = 0.1 #60/20
-    box_size = (750, 350)
+    box_size = (750, 450)
     max_question_chars = 50
 
     def __init__(self, screen):
@@ -138,7 +138,7 @@ class PoetaScreen(ScreenBaseClass):
         self.text_font = pygame.font.Font(consts.FONT_PATH, 40)
         self.small_font = pygame.font.Font(consts.FONT_PATH, 24)
         self.selected_character = selected_character
-        self.box_pos = self.translate_percent(25, 30)
+        self.box_pos = self.translate_percent(25, 25)
 
     def click_callback(self, sprite):
         rect = sprite.rect
@@ -276,6 +276,104 @@ class SabioScreen(ScreenBaseClass):
         pos = self.translate_percent(20, 40)
         super(SabioScreen, self).display_question(question, consts.SABIO_SPRITES, pos)
 
+class GenioScreen(ScreenBaseClass):
+    background_src= 'assets/img/backgrounds/genio.png'
+    seconds_per_word = 0.1 #60/20
+    box_size = (500, 300)
+    max_question_chars = 30
+
+    def __init__(self, screen):
+        super(GenioScreen, self).__init__(screen)
+        self.data = GenioData()
+        self.text_font = pygame.font.Font(consts.FONT_PATH, 40)
+        self.small_font = pygame.font.Font(consts.FONT_PATH, 24)
+        self.selected_character = selected_character
+        self.box_pos = self.translate_percent(13, 30)
+
+    def play_audio(self, audio_name):
+        path =  'assets/audio/%s'  % audio_name
+        sound = pygame.mixer.Sound(path)
+        ch = sound.play()
+        while ch.get_busy():
+            pygame.time.delay(100)
+
+    def click_callback(self, sprite):
+        rect = sprite.rect
+        pos = (rect.left, rect.top)
+        self.menu_items.empty()
+        if sprite.name == str(self.current_question.get('respuesta')):
+            #respuesta correcta, registramos puntaje
+            self.data.win()
+            #se muestra un check
+            checkbox = ImageSprite(consts.GENIO_SPRITES['checkbox_checked'], pos)
+            self.update_score()
+            if self.data.has_won():
+                self.level_finished_message(consts.WIN_MESSAGE, LevelSelectionScreen)
+        else:
+            self.data.loss()
+            self.render_lives()
+            if self.data.game_over():
+                self.level_finished_message(consts.GAME_OVER_MESSAGE, LevelSelectionScreen)
+            else:
+                checkbox = ImageSprite(consts.GENIO_SPRITES['checkbox_bad'], pos)
+
+        self.screen.blit(checkbox.image, checkbox.rect)
+        pygame.display.update()
+        #esperar un round
+        pygame.time.wait(3000)
+        #mostrar otra pregunta
+        self.next_question()
+
+    def render_lives(self, num=None):
+        sprite_name = "%s_life" % self.selected_character
+        super(GenioScreen, self).render_lives(consts.GENIO_SPRITES[sprite_name], num)
+
+    def run(self):
+        self.set_background()
+
+        book = ImageSprite(consts.GENIO_SPRITES['icon'])
+        self.screen.blit(book.image, self.translate_percent(2, 2))
+
+        character = ImageSprite(consts.GENIO_SPRITES[self.selected_character])
+        self.screen.blit(character.image,
+                         self.translate_percent_centered(15, 83,
+                                                         character.rect))
+
+        #TODO: mostrar al genio
+
+        #displaying score
+        self.update_score()
+
+        self.show_lives_text()
+        self.render_lives()
+
+        pygame.display.update()
+        pygame.time.wait(1000)
+        self.next_question()
+
+
+    def display_question(self, question):
+        #TODO: esconder al genio
+        pos = self.translate_percent(20, 40)
+        super(GenioScreen, self).display_question(question, consts.GENIO_SPRITES, pos)
+
+    def clean_question(self):
+        pos = self.box_pos
+        size = self.box_size
+        margin = 20
+        parent_pos = (pos[0] - (margin/2), pos[1] - (margin/2))
+        parent_size = (size[0] + margin, size[1] + margin)
+        parent_rect = pygame.Rect(parent_pos, parent_size)
+        self.screen.blit(self.background, parent_pos, parent_rect)
+        pygame.display.update(parent_rect)
+
+    def next_question(self):
+        self.clean_question()
+        self.current_question = self.data.get_random_question()
+        #tocamos el audio
+        self.play_audio(self.current_question.get('audio'))
+        self.display_question(self.current_question.get('pregunta'))
+
 
 class LevelSelectionScreen(ScreenBaseClass):
     background_src = 'assets/img/backgrounds/sabio.png'
@@ -287,7 +385,7 @@ class LevelSelectionScreen(ScreenBaseClass):
         mundos = ImageSprite(consts.START_SPRITES['mundos'])
         self.screen.blit(mundos.image, self.translate_percent_centered(50, 20, mundos.rect))
         #TODO: get this list from saved game data
-        for i, s in enumerate(['lamp', 'book', 'feather', 'cloud_locked']):
+        for i, s in enumerate(['cloud', 'book', 'feather', 'lamp']):
             sprite = ImageSprite(consts.START_SPRITES.get(s), name=s)
             self.menu_items.add(sprite)
 
@@ -308,12 +406,14 @@ class LevelSelectionScreen(ScreenBaseClass):
             #TODO: mostrar mensaje de que no se puede?
         else:
             #cargamos nuevo nivel
-            if sprite.name == 'lamp':
+            if sprite.name == 'cloud':
                 SabioScreen(self.screen).run()
             elif sprite.name == 'feather':
                 PoetaScreen(self.screen).run()
             elif sprite.name == 'book':
                 CuenteroScreen(self.screen).run()
+            elif sprite.name == 'lamp':
+                GenioScreen(self.screen).run()
             self.menu_items.empty()
 
 class MainClass(BaseHelperClass):

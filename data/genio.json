@@ -1,0 +1,50 @@
+[
+  {
+  "audio": "momo.ogg",
+  "pregunta": "¿Cómo se sentían las personas cuando hablaban con Momo?",
+  "opciones": ["Se sentían felices porque Momo tenía unos ojos hermosos.", "Se sentían importantes, porque Momo sabía escucharlos.", "Se sentían muy bien porque ya no estarían más tristes."],
+  "respuesta": 1
+  },
+  {
+  "audio": "soledad.ogg",
+  "pregunta": "¿Qué emoción es?",
+  "opciones": ["Soledad", "Tristeza", "Vacio"],
+  "respuesta": 0
+  },
+  {
+  "audio": "el-zorro-y-la-tortuga.ogg",
+  "pregunta": "En el texto qué significa la expresión:  \"señor zalamero\"",
+  "opciones": ["Señor hambriento", "Señor amable", "Señor mentiroso"],
+  "respuesta": 2
+  },
+  {
+  "audio": "el-paraguas.ogg",
+  "pregunta": "Según el poema: ¿Cómo se sienten la personas bajo un paraguas?",
+  "opciones": ["Se sienten felices de salir a pasear bajo la lluvia", "Se sienten abejas, orugas, y mariposas bajo un árbol.", "Se sienten andando en un jardín que parece caminar."],
+  "respuesta": 1
+  },
+  {
+  "audio": "lo-fatal.ogg",
+  "pregunta": "Según el poeta, ¿cuál es el más grande dolor?",
+  "opciones": ["Ser y no saber nada.", "No saber a dónde vamos.", "Ser vivo."],
+  "respuesta": 2
+  },
+  {
+  "audio": "la-vaca-estudiosa.ogg",
+  "pregunta": "¿Qué le dijo la maestra a la vaca cuando llego a estudiar a la escuela?",
+  "opciones": ["Estas equivocada.", "Eres muy vieja.", "Estás sorda de una oreja."],
+  "respuesta": 0
+  },
+  {
+  "audio": "amo-amas-rubendario.ogg",
+  "pregunta": "En el poema qué significa la expresión: \"cuando la montaña de la vida nos sea dura y larga y alta y llena de abismos\"",
+  "opciones": ["Cuando vamos de paseo a una montaña que es dificil de escalar. ", "Cuando pasamos en la vida por situaciones difíciles.", "Cuando pasamos en la vida por caminos difíciles y con abismos."],
+  "respuesta": 1
+  },
+  {
+  "audio": "agradecimiento-music.ogg",
+  "pregunta": "¿Qué emoción es?",
+  "opciones": ["Agradecimiento", "Felicidad", "Fortaleza"],
+  "respuesta": 0
+  }
+]

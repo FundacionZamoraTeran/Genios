@@ -59,6 +59,10 @@ class CuenteroData(MultipleChoiceQuizBase):
     def __init__(self, dont_load=False):
         super(CuenteroData, self).__init__('cuentero.json', dont_load)
 
+class GenioData(MultipleChoiceQuizBase):
+
+    def __init__(self, dont_load=False):
+        super(GenioData, self).__init__('genio.json', dont_load)
 
 
 #utils funtions
