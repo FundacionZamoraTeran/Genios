@@ -5,6 +5,7 @@ from gi.repository import Gtk
 import consts
 
 OLPC_SCREEN_SIZE = (1200, 900)
+EVENT_REFRESH = pygame.USEREVENT+1
 
 import logging
 _logger = logging.getLogger('genio-activity')
@@ -162,6 +163,8 @@ class ScreenBaseClass(BaseHelperClass):
                     for s in clicked_sprites:
                         self.click_callback(s)
                         break
+                elif event.type == EVENT_REFRESH:
+                    pygame.display.update()
                 else:
                     continue
 
@@ -293,9 +296,9 @@ class ScreenBaseClass(BaseHelperClass):
                                       parent_background=COLORS['yellow'],
                                       parent_alpha=191)
         pygame.display.update()
-        #TODO agregar deteccion de click y boton para siguiente
+        #removing pun
         words = len(reading.split(' '))
-        time_to_wait = int(words * self.seconds_per_word * 1000)
+        time_to_wait = words * int(self.seconds_per_word * 1000)
         pygame.time.wait(time_to_wait)
         #display question
 

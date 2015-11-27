@@ -8,7 +8,8 @@ from pygame.locals import QUIT
 from gi.repository import Gtk
 
 from engine import SabioData, PoetaData, CuenteroData, GenioData, GameState
-from utils import ImageSprite, BaseHelperClass, ScreenBaseClass, CURSOR, COLORS
+from utils import ImageSprite, BaseHelperClass, ScreenBaseClass, \
+                  CURSOR, COLORS, EVENT_REFRESH
 
 import consts
 
@@ -478,6 +479,7 @@ class MainClass(BaseHelperClass):
             self.screen = pygame.display.get_surface()
 
         pygame.mouse.set_cursor((32,32), (1,1), *self.cursor)
+        pygame.time.set_timer(EVENT_REFRESH, 1000)
         self.start_screen()
         while True:
             while Gtk.events_pending():

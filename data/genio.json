@@ -13,7 +13,7 @@
   },
   {
   "audio": "el-zorro-y-la-tortuga.ogg",
-  "pregunta": "En el texto qué significa la expresión:  \"señor zalamero\"",
+  "pregunta": "En el texto qué significa la expresión: \"señor zalamero\"",
   "opciones": ["Señor hambriento", "Señor amable", "Señor mentiroso"],
   "respuesta": 2
   },
@@ -31,7 +31,7 @@
   },
   {
   "audio": "la-vaca-estudiosa.ogg",
-  "pregunta": "¿Qué le dijo la maestra a la vaca cuando llegó  a estudiar a la escuela?",
+  "pregunta": "¿Qué le dijo la maestra a la vaca cuando llegó a estudiar a la escuela?",
   "opciones": ["Estas equivocada.", "Eres muy vieja.", "Estás sorda de una oreja."],
   "respuesta": 0
   },
@@ -44,7 +44,7 @@
   {
   "audio": "el-principito-y-la-flor.ogg",
   "pregunta": "¿Por qué la flor y el principito estaban tristes?",
-  "opciones": ["Porque la flor era muy orgullosa.", "Porque se estaban despidiendo.", "Porque  la flor estaba resfriada."],
+  "opciones": ["Porque la flor era muy orgullosa.", "Porque se estaban despidiendo.", "Porque la flor estaba resfriada."],
   "respuesta": 1 
   },
   {
