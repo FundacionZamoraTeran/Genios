@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 '''
 Pygame code here
 '''
@@ -23,6 +24,7 @@ class CharacterSelectionScreen(ScreenBaseClass):
     menu_items = pygame.sprite.Group()
     selected_character = None
     background_music = 'assets/audio/background/intro-background.ogg'
+    HELP_TEXT = u"Conviértete en sabio, poeta, cuentero y genio. Lee y escucha con atención para comprender lo que te dicen las palabras... "
 
     def click_callback(self, sprite):
         global selected_character
@@ -37,6 +39,15 @@ class CharacterSelectionScreen(ScreenBaseClass):
 
         return True
 
+    def show_help(self):
+        font = pygame.font.Font(consts.FONT_PATH, 20)
+        pos = self.translate_percent(25, 80)
+        size = (600, 60)
+        surface = self.show_text_rect(self.HELP_TEXT, font, size, pos,
+                                      COLORS['grey'], COLORS['white'],
+                                      justification=1, alpha=191,
+                                      parent_background=COLORS['yellow'],
+                                      parent_alpha=191)
 
     def run(self):
         '''runs the screen'''
@@ -55,7 +66,7 @@ class CharacterSelectionScreen(ScreenBaseClass):
         self.screen.blit(girl.image, girl.rect)
 
         self.play_music()
-
+        self.show_help()
         pygame.display.update()
 
         self.detect_click()
@@ -415,6 +426,13 @@ class LevelSelectionScreen(ScreenBaseClass):
     background_src = 'assets/img/backgrounds/sabio.png'
     menu_items = pygame.sprite.Group()
     background_music = 'assets/audio/background/intro-background.ogg'
+    help_size = (600, 100)
+    text_surface = None
+    music_playing = True
+
+    def __init__(self, *args, **kwargs):
+        super(LevelSelectionScreen, self).__init__(*args, **kwargs)
+        self.help_pos = self.translate_percent(25, 80)
 
     def get_level_list(self):
         level_list = []
@@ -425,6 +443,20 @@ class LevelSelectionScreen(ScreenBaseClass):
             level_list.append('%s_locked' % level)
 
         return level_list
+
+    def show_help(self, message):
+        font = pygame.font.Font(consts.FONT_PATH, 20)
+        self.text_surface = self.show_text_rect(message, font, self.help_size,
+                                      self.help_pos, COLORS['grey'],
+                                      COLORS['white'], justification=1,
+                                      parent_background=COLORS['yellow'],
+                                      alpha=191, parent_alpha=191)
+
+    def run(self):
+        '''runs the screen'''
+        self.set_background()
+        label = ImageSprite(consts.CHARACTER_SPRITES['label'])
+        self.screen.blit(label.image, self.translate_percent_centered(50, 20, label.rect))
 
     def run(self):
         '''runs the screen'''
@@ -463,6 +495,47 @@ class LevelSelectionScreen(ScreenBaseClass):
             elif sprite.name == 'lamp':
                 GenioScreen(self.screen).run()
             self.menu_items.empty()
+
+
+    def hover_callback(self, sprite):
+        print sprite.name
+        print 'book' in sprite.name
+        print sprite.name.startswith('book')
+        if 'cloud' in sprite.name:
+            message = u"Sabio, podrás descifrar los dichos populares, las adivinanzas y las emociones que sabiduría te darán."
+            audio = 'assets/audio/background/sabio-voz.ogg'
+        elif 'feather' in sprite.name :
+            message = u"Poeta, descubrirás las formas, aromas, figuras de las palabras, lo bello y lo profundo se revela en un verso."
+            audio = 'assets/audio/background/poeta-voz.ogg'
+        elif 'book' in sprite.name:
+            message = u"Cuentero, conocerás nuevos personajes y lugares, todo puede ser posible si dispuesto estás y con una historia puedes volar."
+            audio = 'assets/audio/background/cuentero-voz.ogg'
+        elif 'lamp' in sprite.name:
+            message = u"Genio, desarrollarás tu máximo potencial como sabio, poeta y cuentero, en genio te convertirás si sabes bien escuchar."
+            audio = 'assets/audio/background/genio-voz.ogg'
+
+        #play music and show text
+        self.show_help(message)
+        self.play_music(audio, 0)
+        self.music_playing = False
+        pygame.display.update()
+
+    def exit_hover(self):
+        if not self.music_playing:
+            self.play_music()
+            self.music_playing = True
+
+        if self.text_surface:
+            pos = self.help_pos
+            size = self.help_size
+            margin = 20
+            parent_pos = (pos[0] - (margin/2), pos[1] - (margin/2))
+            parent_size = (size[0] + margin, size[1] + margin)
+            parent_rect = pygame.Rect(parent_pos, parent_size)
+            self.screen.blit(self.background, parent_pos, parent_rect)
+            pygame.display.update(parent_rect)
+
+
 
 class MainClass(BaseHelperClass):
     '''Main Class that starts the game'''
