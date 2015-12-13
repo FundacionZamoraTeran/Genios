@@ -6,6 +6,9 @@ import consts
 
 OLPC_SCREEN_SIZE = (1200, 900)
 EVENT_REFRESH = pygame.USEREVENT+1
+EVENT_SHOW_NEXT_WORD = pygame.USEREVENT+2
+EVENT_SHOW_NEXT_QUESTION = pygame.USEREVENT+3
+EVENT_ANSWER_EXPIRED = pygame.USEREVENT+4
 
 import logging
 _logger = logging.getLogger('genio-activity')
@@ -315,21 +318,46 @@ class ScreenBaseClass(BaseHelperClass):
         return surface
 
     def display_reading(self, reading):
-        surface = self.show_text_rect(reading,
+        #aca set timer
+        pygame.time.set_timer(EVENT_REFRESH, 1000)
+        def inner(message):
+            surface = self.show_text_rect(message,
                                       self.small_font, self.box_size,
                                       self.box_pos,
                                       COLORS['grey'], COLORS['white'],
                                       justification=1, alpha=191,
                                       parent_background=COLORS['yellow'],
                                       parent_alpha=191)
-        pygame.display.update()
-        #removing pun
-        words = len(reading.split(' '))
-        time_to_wait = words * int(self.seconds_per_word * 1000)
-        pygame.time.wait(time_to_wait)
-        #display question
+            pygame.display.update()
 
-        self.display_question(self.current_question.get('pregunta'))
+        words = reading.split(' ')
+        text_buffer= words.pop(0)
+        inner(text_buffer)
+
+        time_to_wait = int(self.seconds_per_word * 1000)
+        pygame.time.set_timer(EVENT_SHOW_NEXT_WORD, time_to_wait)
+        while True:
+            while Gtk.events_pending():
+                Gtk.main_iteration()
+
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    try:
+                        pygame.quit()
+                    except:
+                        pass
+                    sys.exit()
+                    break
+                if event.type == EVENT_SHOW_NEXT_WORD:
+                    if words:
+                        text_buffer = '%s %s' % (text_buffer, words.pop(0))
+                        inner(text_buffer)
+                    else:
+                        pygame.time.set_timer(EVENT_SHOW_NEXT_WORD, 0)
+                        pygame.time.set_timer(EVENT_SHOW_NEXT_QUESTION, time_to_wait * 2)
+                if event.type == EVENT_SHOW_NEXT_QUESTION:
+                        pygame.time.set_timer(EVENT_SHOW_NEXT_QUESTION, 0)
+                        self.display_question(self.current_question.get('pregunta'))
 
 
     def display_question(self, question, sprite_dict, pos):
