@@ -95,6 +95,17 @@ class ScreenBaseClass(BaseHelperClass):
         '''This method is executed to start drawing stuff on screen'''
         raise NotImplementedError
 
+    def play_music(self):
+        if self.background_music:
+            self.stop_music()
+            pygame.mixer.music.set_volume(1.0)
+            pygame.mixer.music.load(self.background_music)
+            pygame.mixer.music.play(-1)
+
+    def stop_music(self):
+        if pygame.mixer.music.get_busy():
+            pygame.mixer.music.stop()
+
     def click_callback(self):
         '''This method is executed when detecting a click on items'''
         raise NotImplementedError

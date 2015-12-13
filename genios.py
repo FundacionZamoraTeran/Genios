@@ -22,6 +22,7 @@ class CharacterSelectionScreen(ScreenBaseClass):
     background_src = 'assets/img/backgrounds/sabio.png'
     menu_items = pygame.sprite.Group()
     selected_character = None
+    background_music = 'assets/audio/background/intro-background.ogg'
 
     def click_callback(self, sprite):
         global selected_character
@@ -53,6 +54,8 @@ class CharacterSelectionScreen(ScreenBaseClass):
         girl.rect.left, girl.rect.top = self.translate_percent_centered(70, 55, girl.rect)
         self.screen.blit(girl.image, girl.rect)
 
+        self.play_music()
+
         pygame.display.update()
 
         self.detect_click()
@@ -63,6 +66,7 @@ class CuenteroScreen(ScreenBaseClass):
     box_size = (840, 550)
     max_question_chars = 50
     LEVEL_NAME = 'book'
+    background_music = 'assets/audio/background/cuentero-background.ogg'
 
     def __init__(self, screen):
         super(CuenteroScreen, self).__init__(screen)
@@ -121,6 +125,7 @@ class CuenteroScreen(ScreenBaseClass):
         #diplaying Vidas text
         self.show_lives_text()
         self.render_lives()
+        self.play_music()
 
         self.next_question()
 
@@ -135,6 +140,7 @@ class PoetaScreen(ScreenBaseClass):
     box_size = (750, 450)
     max_question_chars = 50
     LEVEL_NAME = 'feather'
+    background_music = 'assets/audio/background/poeta-background.ogg'
 
     def __init__(self, screen):
         super(PoetaScreen, self).__init__(screen)
@@ -198,6 +204,7 @@ class PoetaScreen(ScreenBaseClass):
         #diplaying Vidas text
         self.show_lives_text()
         self.render_lives()
+        self.play_music()
 
         self.next_question()
         #pygame.display.update()
@@ -214,6 +221,7 @@ class SabioScreen(ScreenBaseClass):
     box_size = (500, 300)
     max_question_chars = 30
     LEVEL_NAME = 'cloud'
+    background_music = 'assets/audio/background/sabio-background.ogg'
 
     def __init__(self, screen):
         super(SabioScreen, self).__init__(screen)
@@ -274,6 +282,8 @@ class SabioScreen(ScreenBaseClass):
 
         self.show_lives_text()
         self.render_lives()
+
+        self.play_music()
 
         self.next_question()
         #pygame.display.update()
@@ -364,6 +374,7 @@ class GenioScreen(ScreenBaseClass):
 
         pygame.display.update()
         pygame.time.wait(1000)
+        self.play_music()
         self.next_question()
 
 
@@ -403,6 +414,7 @@ class GenioScreen(ScreenBaseClass):
 class LevelSelectionScreen(ScreenBaseClass):
     background_src = 'assets/img/backgrounds/sabio.png'
     menu_items = pygame.sprite.Group()
+    background_music = 'assets/audio/background/intro-background.ogg'
 
     def get_level_list(self):
         level_list = []
@@ -430,6 +442,7 @@ class LevelSelectionScreen(ScreenBaseClass):
                     self.translate_percent_centered(position, 45, sprite.rect)
             self.screen.blit(sprite.image, sprite.rect)
 
+        self.play_music()
         pygame.display.update()
 
         #click detection
