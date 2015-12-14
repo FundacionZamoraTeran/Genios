@@ -76,6 +76,7 @@ class ScreenBaseClass(BaseHelperClass):
     menu_items = pygame.sprite.Group()
     current_question = None
     ANSWER_TIMEOUT = 20000
+    exit_button = None
 
     def __init__(self, screen):
         self.screen = screen
@@ -153,6 +154,11 @@ class ScreenBaseClass(BaseHelperClass):
 
         self.lives_sprites.draw(self.screen)
 
+    def render_exit_button(self):
+        pos = self.translate_percent(95, 93)
+        self.exit_button = ImageSprite('assets/img/sprites/common/exit.png', pos)
+        self.screen.blit(self.exit_button.image, pos)
+
     def next_question(self):
         self.current_question = self.data.get_random_question()
         self.display_reading(self.current_question.get('lectura', ''))
@@ -192,6 +198,15 @@ class ScreenBaseClass(BaseHelperClass):
                     for s in clicked_sprites:
                         self.click_callback(s)
                         break
+
+                    if self.exit_button:
+                        if self.exit_button.rect.collidepoint(pos):
+                            try:
+                                pygame.quit()
+                                sys.exit()
+                                return
+                            except Exception, e:
+                                return
                 elif event.type == pygame.MOUSEMOTION:
                     pos = pygame.mouse.get_pos()
                     clicked_sprites = [s for s in self.menu_items \
@@ -370,6 +385,17 @@ class ScreenBaseClass(BaseHelperClass):
                 if event.type == EVENT_SHOW_NEXT_QUESTION:
                         pygame.time.set_timer(EVENT_SHOW_NEXT_QUESTION, 0)
                         self.display_question(self.current_question.get('pregunta'))
+
+                if event.type == pygame.MOUSEBUTTONUP:
+                    pos = pygame.mouse.get_pos()
+                    if self.exit_button:
+                        if self.exit_button.rect.collidepoint(pos):
+                            try:
+                                pygame.quit()
+                                sys.exit()
+                                return
+                            except Exception, e:
+                                return
 
 
     def display_question(self, question, sprite_dict, pos):

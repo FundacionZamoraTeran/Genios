@@ -74,5 +74,5 @@ GAME_OVER_TIME = 3000 #3 segundos
 MAX_QUESTION_CHARS = 30
 
 #messages
-WIN_MESSAGE = " ¡Felicitaciones te haz convertido en un genio!"
+WIN_MESSAGE = "Felicitaciones te haz convertido en un genio!"
 GAME_OVER_MESSAGE = 'Vuelve a Intentarlo'

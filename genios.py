@@ -65,6 +65,7 @@ class CharacterSelectionScreen(ScreenBaseClass):
         girl.rect.left, girl.rect.top = self.translate_percent_centered(70, 55, girl.rect)
         self.screen.blit(girl.image, girl.rect)
 
+        self.render_exit_button()
         self.play_music()
         self.show_help()
         pygame.display.update()
@@ -134,6 +135,7 @@ class CuenteroScreen(ScreenBaseClass):
         self.update_score()
 
         #diplaying Vidas text
+        self.render_exit_button()
         self.show_lives_text()
         self.render_lives()
         self.play_music()
@@ -213,6 +215,7 @@ class PoetaScreen(ScreenBaseClass):
         self.update_score()
 
         #diplaying Vidas text
+        self.render_exit_button()
         self.show_lives_text()
         self.render_lives()
         self.play_music()
@@ -291,6 +294,7 @@ class SabioScreen(ScreenBaseClass):
         #displaying score
         self.update_score()
 
+        self.render_exit_button()
         self.show_lives_text()
         self.render_lives()
 
@@ -380,6 +384,7 @@ class GenioScreen(ScreenBaseClass):
         #displaying score
         self.update_score()
 
+        self.render_exit_button()
         self.show_lives_text()
         self.render_lives()
 
@@ -452,11 +457,6 @@ class LevelSelectionScreen(ScreenBaseClass):
                                       parent_background=COLORS['yellow'],
                                       alpha=191, parent_alpha=191)
 
-    def run(self):
-        '''runs the screen'''
-        self.set_background()
-        label = ImageSprite(consts.CHARACTER_SPRITES['label'])
-        self.screen.blit(label.image, self.translate_percent_centered(50, 20, label.rect))
 
     def run(self):
         '''runs the screen'''
@@ -474,6 +474,7 @@ class LevelSelectionScreen(ScreenBaseClass):
                     self.translate_percent_centered(position, 45, sprite.rect)
             self.screen.blit(sprite.image, sprite.rect)
 
+        self.render_exit_button()
         self.play_music()
         pygame.display.update()
 
