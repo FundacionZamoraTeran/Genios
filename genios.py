@@ -228,7 +228,7 @@ class PoetaScreen(ScreenBaseClass):
 
 class SabioScreen(ScreenBaseClass):
     background_src= 'assets/img/backgrounds/sabio.png'
-    seconds_per_word = 60/20.0
+    seconds_per_word = 0.5
     box_size = (500, 300)
     max_question_chars = 30
     LEVEL_NAME = 'cloud'
@@ -498,9 +498,6 @@ class LevelSelectionScreen(ScreenBaseClass):
 
 
     def hover_callback(self, sprite):
-        print sprite.name
-        print 'book' in sprite.name
-        print sprite.name.startswith('book')
         if 'cloud' in sprite.name:
             message = u"Sabio, podrás descifrar los dichos populares, las adivinanzas y las emociones que sabiduría te darán."
             audio = 'assets/audio/background/sabio-voz.ogg'

@@ -75,6 +75,7 @@ class ScreenBaseClass(BaseHelperClass):
     lives_sprites = pygame.sprite.Group()
     menu_items = pygame.sprite.Group()
     current_question = None
+    ANSWER_TIMEOUT = 20000
 
     def __init__(self, screen):
         self.screen = screen
@@ -112,6 +113,14 @@ class ScreenBaseClass(BaseHelperClass):
     def click_callback(self):
         '''This method is executed when detecting a click on items'''
         raise NotImplementedError
+
+    def answer_expired(self):
+        self.data.loss()
+        self.render_lives()
+        if self.data.game_over():
+            self.level_finished_message(consts.GAME_OVER_MESSAGE, LevelSelectionScreen)
+        else:
+            self.next_question()
 
     def hover_callback(self, x):
         pass
@@ -187,7 +196,7 @@ class ScreenBaseClass(BaseHelperClass):
                     pos = pygame.mouse.get_pos()
                     clicked_sprites = [s for s in self.menu_items \
                                        if s.rect.collidepoint(pos)]
-                    print clicked_sprites
+
                     for s in clicked_sprites:
                         self.hover_callback(s)
 
@@ -195,6 +204,9 @@ class ScreenBaseClass(BaseHelperClass):
                         self.exit_hover()
                 elif event.type == EVENT_REFRESH:
                     pygame.display.update()
+                elif event.type == EVENT_ANSWER_EXPIRED:
+                    pygame.time.set_timer(EVENT_ANSWER_EXPIRED, 0)
+                    self.answer_expired()
                 else:
                     continue
 
@@ -400,6 +412,7 @@ class ScreenBaseClass(BaseHelperClass):
 
         pygame.display.update()
 
+        pygame.time.set_timer(EVENT_ANSWER_EXPIRED, self.ANSWER_TIMEOUT)
         self.detect_click()
 
 CURSOR = (
