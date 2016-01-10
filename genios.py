@@ -79,6 +79,7 @@ class CuenteroScreen(ScreenBaseClass):
     max_question_chars = 50
     LEVEL_NAME = 'book'
     background_music = 'assets/audio/background/cuentero-background.ogg'
+    split_paragraphs = True
 
     def __init__(self, screen):
         super(CuenteroScreen, self).__init__(screen)
@@ -165,6 +166,7 @@ class PoetaScreen(ScreenBaseClass):
     max_question_chars = 50
     LEVEL_NAME = 'feather'
     background_music = 'assets/audio/background/poeta-background.ogg'
+    split_paragraphs = True
 
     def __init__(self, screen):
         super(PoetaScreen, self).__init__(screen)

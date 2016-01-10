@@ -66,7 +66,7 @@ GENIO_SPRITES = {
     'dialog': get_sprite_path('genio', 'dialogo.png'),
 }
 
-FONT_PATH = 'assets/fonts/PatuaOne-Regular.ttf'
+FONT_PATH = 'assets/fonts/BOMBARD.ttf'
 
 TIMEOUT_SOUND = 'assets/audio/effects/timeout.ogg'
 WIN_SOUND = 'assets/audio/effects/win.ogg'

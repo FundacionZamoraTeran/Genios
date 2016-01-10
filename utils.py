@@ -9,6 +9,7 @@ EVENT_REFRESH = pygame.USEREVENT+1
 EVENT_SHOW_NEXT_WORD = pygame.USEREVENT+2
 EVENT_SHOW_NEXT_QUESTION = pygame.USEREVENT+3
 EVENT_ANSWER_EXPIRED = pygame.USEREVENT+4
+EVENT_SHOW_NEXT_PARAGRAPH = pygame.USEREVENT+5
 
 import logging
 _logger = logging.getLogger('genio-activity')
@@ -78,6 +79,7 @@ class ScreenBaseClass(BaseHelperClass):
     ANSWER_TIMEOUT = 20000
     exit_button = None
     sound = None
+    split_paragraphs = False
 
     def __init__(self, screen):
         self.screen = screen
@@ -366,12 +368,18 @@ class ScreenBaseClass(BaseHelperClass):
                                       parent_alpha=191)
             pygame.display.update()
 
-        words = reading.split(' ')
+        if self.split_paragraphs:
+            paragraphs = reading.split('\n\n')
+        else:
+            paragraphs = [reading]
+
+        words = paragraphs.pop(0).split(' ')
         text_buffer= words.pop(0)
         inner(text_buffer)
 
         time_to_wait = int(self.seconds_per_word * 1000)
         pygame.time.set_timer(EVENT_SHOW_NEXT_WORD, time_to_wait)
+
         while True:
             while Gtk.events_pending():
                 Gtk.main_iteration()
@@ -384,13 +392,21 @@ class ScreenBaseClass(BaseHelperClass):
                         pass
                     sys.exit()
                     break
+                if event.type == EVENT_SHOW_NEXT_PARAGRAPH:
+                    words = paragraphs.pop(0).split(' ')
+                    text_buffer = ''
+                    pygame.time.set_timer(EVENT_SHOW_NEXT_PARAGRAPH, 0)
+                    pygame.time.set_timer(EVENT_SHOW_NEXT_WORD, time_to_wait)
                 if event.type == EVENT_SHOW_NEXT_WORD:
                     if words:
                         text_buffer = '%s %s' % (text_buffer, words.pop(0))
                         inner(text_buffer)
                     else:
                         pygame.time.set_timer(EVENT_SHOW_NEXT_WORD, 0)
-                        pygame.time.set_timer(EVENT_SHOW_NEXT_QUESTION, time_to_wait * 2)
+                        if len(paragraphs):
+                            pygame.time.set_timer(EVENT_SHOW_NEXT_PARAGRAPH, 1500)
+                        else:
+                            pygame.time.set_timer(EVENT_SHOW_NEXT_QUESTION, time_to_wait * 2)
                 if event.type == EVENT_SHOW_NEXT_QUESTION:
                         pygame.time.set_timer(EVENT_SHOW_NEXT_QUESTION, 0)
                         pygame.time.wait(3000)
