@@ -88,21 +88,32 @@ class CuenteroScreen(ScreenBaseClass):
         self.selected_character = selected_character
         self.box_pos = self.translate_percent(25, 20)
 
+    def answer_expired(self):
+        super(CuenteroScreen, self).answer_expired()
+        if self.data.game_over():
+            self.level_finished_message(consts.GAME_OVER_MESSAGE, LevelSelectionScreen)
+        else:
+            self.next_question()
+
     def click_callback(self, sprite):
         rect = sprite.rect
         pos = (rect.left, rect.top)
         self.menu_items.empty()
+        self.stop_sound()
         if sprite.name == str(self.current_question.get('respuesta')):
             #respuesta correcta, registramos puntaje
             self.data.win()
+            self.play_sound(consts.CORRECT_SOUND)
             #se muestra un check
             checkbox = ImageSprite(consts.CUENTERO_SPRITES['checkbox_checked'], pos)
             self.update_score()
             if self.data.has_won():
+                self.play_sound(consts.WIN_SOUND)
                 self.data.game_state.unlock_next_level(self.LEVEL_NAME)
                 self.level_finished_message(consts.WIN_MESSAGE, LevelSelectionScreen)
         else:
             self.data.loss()
+            self.play_sound(consts.LOSS_SOUND)
             self.render_lives()
             if self.data.game_over():
                 self.level_finished_message(consts.GAME_OVER_MESSAGE, LevelSelectionScreen)
@@ -163,21 +174,33 @@ class PoetaScreen(ScreenBaseClass):
         self.selected_character = selected_character
         self.box_pos = self.translate_percent(25, 25)
 
+    def answer_expired(self):
+        super(PoetaScreen, self).answer_expired()
+        if self.data.game_over():
+            self.level_finished_message(consts.GAME_OVER_MESSAGE, LevelSelectionScreen)
+        else:
+            self.next_question()
+
     def click_callback(self, sprite):
         rect = sprite.rect
         pos = (rect.left, rect.top)
         self.menu_items.empty()
+        self.stop_sound()
         if sprite.name == str(self.current_question.get('respuesta')):
             #respuesta correcta, registramos puntaje
             self.data.win()
+            self.play_sound(consts.CORRECT_SOUND)
             #se muestra un check
             checkbox = ImageSprite(consts.POETA_SPRITES['checkbox_checked'], pos)
+            self.play_sound(consts.CORRECT_SOUND)
             self.update_score()
             if self.data.has_won():
+                self.play_sound(consts.WIN_SOUND)
                 self.data.game_state.unlock_next_level(self.LEVEL_NAME)
                 self.level_finished_message(consts.WIN_MESSAGE, LevelSelectionScreen)
         else:
             self.data.loss()
+            self.play_sound(consts.LOSS_SOUND)
             self.render_lives()
             if self.data.game_over():
                 self.level_finished_message(consts.GAME_OVER_MESSAGE, LevelSelectionScreen)
@@ -231,7 +254,7 @@ class PoetaScreen(ScreenBaseClass):
 
 class SabioScreen(ScreenBaseClass):
     background_src= 'assets/img/backgrounds/sabio.png'
-    seconds_per_word = 0.5
+    seconds_per_word = 1
     box_size = (500, 300)
     max_question_chars = 30
     LEVEL_NAME = 'cloud'
@@ -245,21 +268,32 @@ class SabioScreen(ScreenBaseClass):
         self.selected_character = selected_character
         self.box_pos = self.translate_percent(13, 30)
 
+    def answer_expired(self):
+        super(SabioScreen, self).answer_expired()
+        if self.data.game_over():
+            self.level_finished_message(consts.GAME_OVER_MESSAGE, LevelSelectionScreen)
+        else:
+            self.next_question()
+
     def click_callback(self, sprite):
         rect = sprite.rect
         pos = (rect.left, rect.top)
         self.menu_items.empty()
+        self.stop_sound()
         if sprite.name == str(self.current_question.get('respuesta')):
             #respuesta correcta, registramos puntaje
             self.data.win()
+            self.play_sound(consts.CORRECT_SOUND)
             #se muestra un check
             checkbox = ImageSprite(consts.SABIO_SPRITES['checkbox_checked'], pos)
             self.update_score()
             if self.data.has_won():
+                self.play_sound(consts.WIN_SOUND)
                 self.data.game_state.unlock_next_level(self.LEVEL_NAME)
                 self.level_finished_message(consts.WIN_MESSAGE, LevelSelectionScreen)
         else:
             self.data.loss()
+            self.play_sound(consts.LOSS_SOUND)
             self.render_lives()
             if self.data.game_over():
                 self.level_finished_message(consts.GAME_OVER_MESSAGE, LevelSelectionScreen)
@@ -325,6 +359,13 @@ class GenioScreen(ScreenBaseClass):
         self.dialog_pos = self.translate_percent(20, 15)
         self.dialog = ImageSprite(consts.GENIO_SPRITES['dialog'], self.dialog_pos)
 
+    def answer_expired(self):
+        super(GenioScreen, self).answer_expired()
+        if self.data.game_over():
+            self.level_finished_message(consts.GAME_OVER_MESSAGE, LevelSelectionScreen)
+        else:
+            self.next_question()
+
     def play_audio(self, audio_name):
         path =  'assets/audio/%s'  % audio_name
         sound = pygame.mixer.Sound(path)
@@ -336,17 +377,21 @@ class GenioScreen(ScreenBaseClass):
         rect = sprite.rect
         pos = (rect.left, rect.top)
         self.menu_items.empty()
+        self.stop_sound()
         if sprite.name == str(self.current_question.get('respuesta')):
             #respuesta correcta, registramos puntaje
             self.data.win()
+            self.play_sound(consts.CORRECT_SOUND)
             #se muestra un check
             checkbox = ImageSprite(consts.GENIO_SPRITES['checkbox_checked'], pos)
             self.update_score()
             if self.data.has_won():
+                self.play_sound(consts.WIN_SOUND)
                 self.data.game_state.unlock_next_level(self.LEVEL_NAME)
                 self.level_finished_message(consts.WIN_MESSAGE, LevelSelectionScreen)
         else:
             self.data.loss()
+            self.play_sound(consts.LOSS_SOUND)
             self.render_lives()
             if self.data.game_over():
                 self.level_finished_message(consts.GAME_OVER_MESSAGE, LevelSelectionScreen)
@@ -425,7 +470,6 @@ class GenioScreen(ScreenBaseClass):
         self.play_audio(self.current_question.get('audio'))
         self.clean_dialog()
         self.display_question(self.current_question.get('pregunta'))
-
 
 class LevelSelectionScreen(ScreenBaseClass):
     background_src = 'assets/img/backgrounds/sabio.png'
@@ -532,7 +576,6 @@ class LevelSelectionScreen(ScreenBaseClass):
             parent_rect = pygame.Rect(parent_pos, parent_size)
             self.screen.blit(self.background, parent_pos, parent_rect)
             pygame.display.update(parent_rect)
-
 
 
 class MainClass(BaseHelperClass):

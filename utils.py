@@ -77,6 +77,7 @@ class ScreenBaseClass(BaseHelperClass):
     current_question = None
     ANSWER_TIMEOUT = 20000
     exit_button = None
+    sound = None
 
     def __init__(self, screen):
         self.screen = screen
@@ -103,7 +104,7 @@ class ScreenBaseClass(BaseHelperClass):
     def play_music(self, audio_path=None, loop=-1):
         if self.background_music:
             self.stop_music()
-            pygame.mixer.music.set_volume(1.0)
+            pygame.mixer.music.set_volume(0.9)
             pygame.mixer.music.load(audio_path or self.background_music)
             pygame.mixer.music.play(loop)
 
@@ -118,10 +119,17 @@ class ScreenBaseClass(BaseHelperClass):
     def answer_expired(self):
         self.data.loss()
         self.render_lives()
-        if self.data.game_over():
-            self.level_finished_message(consts.GAME_OVER_MESSAGE, LevelSelectionScreen)
-        else:
-            self.next_question()
+        self.stop_sound()
+        self.play_sound(consts.TIMEOUT_SOUND)
+
+    def stop_sound(self):
+        if self.sound:
+            self.sound.stop()
+
+    def play_sound(self, audio_path, loops=0):
+        self.sound = pygame.mixer.Sound(audio_path)
+        self.sound.set_volume(1.0)
+        self.sound.play(loops)
 
     def hover_callback(self, x):
         pass
@@ -172,6 +180,7 @@ class ScreenBaseClass(BaseHelperClass):
                                       parent_background=COLORS['yellow'],
                                       parent_alpha=191)
         pygame.display.update()
+        pygame.time.set_timer(EVENT_ANSWER_EXPIRED, 0)
         pygame.time.wait(consts.GAME_OVER_TIME)
         return next_screen(self.screen).run()
 
@@ -384,6 +393,7 @@ class ScreenBaseClass(BaseHelperClass):
                         pygame.time.set_timer(EVENT_SHOW_NEXT_QUESTION, time_to_wait * 2)
                 if event.type == EVENT_SHOW_NEXT_QUESTION:
                         pygame.time.set_timer(EVENT_SHOW_NEXT_QUESTION, 0)
+                        pygame.time.wait(3000)
                         self.display_question(self.current_question.get('pregunta'))
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -439,6 +449,7 @@ class ScreenBaseClass(BaseHelperClass):
         pygame.display.update()
 
         pygame.time.set_timer(EVENT_ANSWER_EXPIRED, self.ANSWER_TIMEOUT)
+        self.play_sound(consts.CLOCK_SOUND, -1)
         self.detect_click()
 
 CURSOR = (

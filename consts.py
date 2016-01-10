@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 get_sprite_path = lambda x, y: 'assets/img/sprites/%s/%s' % (x, y)
 
 START_SPRITES = {
@@ -66,6 +67,12 @@ GENIO_SPRITES = {
 }
 
 FONT_PATH = 'assets/fonts/PatuaOne-Regular.ttf'
+
+TIMEOUT_SOUND = 'assets/audio/effects/timeout.ogg'
+WIN_SOUND = 'assets/audio/effects/win.ogg'
+CORRECT_SOUND = 'assets/audio/effects/correct.ogg'
+LOSS_SOUND = 'assets/audio/effects/loss.ogg'
+CLOCK_SOUND = 'assets/audio/effects/tictac.ogg'
 
 BOY = 'boy'
 GIRL = 'girl'
